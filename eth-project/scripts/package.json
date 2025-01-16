@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "deploy": "node scripts/contracts/deploy.js",
+    "interact": "node scripts/contracts/interact.js",
+    "monitor": "node scripts/monitors/websocket.js"
+  }
+}

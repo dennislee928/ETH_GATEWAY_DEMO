@@ -1,14 +1,11 @@
 const { ethers } = require("ethers");
 const fs = require("fs");
 const path = require("path");
+const solc = require("solc");
 require("dotenv").config();
-const { checkRequiredEnvVars } = require("../utils/envCheck");
 
 async function main() {
   try {
-    // 檢查環境變數
-    checkRequiredEnvVars();
-
     // 確保 private key 格式正確
     const privateKey = process.env.PRIVATE_KEY.startsWith("0x")
       ? process.env.PRIVATE_KEY
@@ -23,53 +20,60 @@ async function main() {
     console.log("連接到網路:", network.name);
 
     // 獲取部署者資訊
-    const balance = await wallet.getBalance();
+    const balance = await provider.getBalance(wallet.address);
     console.log("部署者餘額:", ethers.formatEther(balance), "ETH");
 
-    // 讀取合約原始碼
+    // 讀取和編譯合約
     const contractPath = path.join(
       __dirname,
       "../../contracts/SimpleStorage.sol"
     );
     const source = fs.readFileSync(contractPath, "utf8");
 
-    // 部署合約
-    const SimpleStorage = await ethers.getContractFactory(
-      "SimpleStorage",
-      wallet
-    );
+    const input = {
+      language: "Solidity",
+      sources: {
+        "SimpleStorage.sol": {
+          content: source,
+        },
+      },
+      settings: {
+        outputSelection: {
+          "*": {
+            "*": ["*"],
+          },
+        },
+      },
+    };
+
+    // 編譯合約
+    const output = JSON.parse(solc.compile(JSON.stringify(input)));
+    const contract = output.contracts["SimpleStorage.sol"]["SimpleStorage"];
+
+    // 獲取 ABI 和 Bytecode
+    const abi = contract.abi;
+    const bytecode = contract.evm.bytecode.object;
+
+    // 創建合約工廠
+    const factory = new ethers.ContractFactory(abi, bytecode, wallet);
     console.log("正在部署合約...");
 
-    // 估算 gas
-    const deploymentGas = await SimpleStorage.getDeployTransaction().then(
-      (tx) => provider.estimateGas(tx)
-    );
-    console.log("預估 gas:", deploymentGas.toString());
-
-    // 獲取當前 gas 價格
-    const feeData = await provider.getFeeData();
-    console.log(
-      "當前 gas 價格:",
-      ethers.formatUnits(feeData.gasPrice, "gwei"),
-      "Gwei"
-    );
-
     // 部署合約
-    const simpleStorage = await SimpleStorage.deploy();
-    console.log("等待交易確認...");
-
+    const simpleStorage = await factory.deploy();
     await simpleStorage.waitForDeployment();
+
+    // 獲取部署收據
     const receipt = await provider.getTransactionReceipt(
       simpleStorage.deploymentTransaction().hash
     );
 
     // 保存部署資訊
     const deploymentInfo = {
-      contractAddress: simpleStorage.target,
+      contractAddress: await simpleStorage.getAddress(),
       deploymentHash: simpleStorage.deploymentTransaction().hash,
       deployer: wallet.address,
       timestamp: new Date().toISOString(),
-      network: "sepolia",
+      network: network.name,
       gasUsed: receipt.gasUsed.toString(),
       blockNumber: receipt.blockNumber,
     };
@@ -79,20 +83,13 @@ async function main() {
     fs.writeFileSync(deploymentPath, JSON.stringify(deploymentInfo, null, 2));
 
     console.log("部署成功！");
-    console.log("合約地址:", simpleStorage.target);
+    console.log("合約地址:", await simpleStorage.getAddress());
     console.log("部署資訊已保存到 deployment.json");
 
-    // 驗證合約部署
-    const code = await provider.getCode(simpleStorage.target);
-    if (code === "0x") {
-      throw new Error("合約部署失敗！");
-    }
-
-    // 初始化測試
+    // 測試合約
     const value = await simpleStorage.getValue();
     console.log("初始值:", value.toString());
 
-    // 設置新值進行測試
     const tx = await simpleStorage.setValue(42);
     await tx.wait();
     console.log("交易確認，新值已設置");

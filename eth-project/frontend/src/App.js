@@ -48,6 +48,7 @@ function App() {
           <AddsOn />
         </section>
       </div>
+      <Faucet />
       <Footer />
     </div>
   );

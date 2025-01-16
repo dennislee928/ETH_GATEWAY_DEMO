@@ -6,12 +6,14 @@
     "interact": "node contracts/interact.js",
     "monitor": "node monitors/websocket.js",
     "test-qn": "node quicknode-test.js",
-    "examples": "node quicknode-examples.js"
+    "examples": "node quicknode-examples.js",
+    "faucet": "node utils/alchemy-faucet.js"
   },
   "dependencies": {
-    "@quicknode/sdk": "^1.0.0",
-    "ethers": "^6.13.5",
+    "@quicknode/sdk": "^2.4.0",
+    "axios": "^1.7.9",
     "dotenv": "^16.4.1",
+    "ethers": "^6.13.5",
     "winston": "^3.11.0"
   }
 }

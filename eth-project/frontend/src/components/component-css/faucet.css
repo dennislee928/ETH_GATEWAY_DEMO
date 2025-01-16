@@ -1,0 +1,87 @@
+.faucet-container {
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.input-section {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.address-input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.check-button {
+  padding: 10px 20px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.check-button:hover {
+  background: #45a049;
+}
+
+.check-button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+}
+
+.balance-info {
+  margin: 20px 0;
+  padding: 15px;
+  background: #e8f5e9;
+  border-radius: 4px;
+}
+
+.monitoring-status {
+  color: #666;
+  margin: 10px 0;
+}
+
+.faucet-links {
+  margin-top: 30px;
+}
+
+.faucet-list {
+  display: grid;
+  gap: 20px;
+  margin-top: 15px;
+}
+
+.faucet-item {
+  padding: 15px;
+  background: #f5f5f5;
+  border-radius: 4px;
+}
+
+.faucet-item h4 {
+  margin: 0 0 10px 0;
+  color: #333;
+}
+
+.faucet-item a {
+  color: #4caf50;
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.faucet-item a:hover {
+  text-decoration: underline;
+}
+
+.faucet-item p {
+  margin: 5px 0;
+  color: #666;
+}

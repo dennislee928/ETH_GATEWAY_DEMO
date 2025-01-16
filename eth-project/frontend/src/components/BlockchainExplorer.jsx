@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import useBlockchain from "../hooks/useBLockchain";
-import "../components/componsnt-css/BlockchainExplorer.css";
+import "../components/component-css/BlockchainExplorer.css";
 import { ethers } from "ethers";
 import { useTranslation } from "react-i18next";
 

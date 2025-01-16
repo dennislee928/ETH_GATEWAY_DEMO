@@ -5,6 +5,7 @@ import BlockchainExplorer from "./components/BlockchainExplorer";
 import i18n from "./i18n";
 import AdvancedFeatures from "./components/AdvancedFeatures";
 import AddsOn from "./components/adds-on";
+import Footer from "./components/footer";
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -48,6 +49,7 @@ function App() {
           <AddsOn />
         </section>
       </div>
+      <Footer />
     </div>
   );
 }

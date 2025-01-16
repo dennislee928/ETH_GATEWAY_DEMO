@@ -83,6 +83,21 @@ const resources = {
       networkError: "Failed to fetch network stats",
       addressError: "Failed to check address",
       ensError: "Failed to resolve ENS name",
+
+      explorerName: "Blockchain Explorer",
+      footerDescription:
+        "Explore the Ethereum network with ease. Real-time data, smart contract interactions, and more.",
+      networkStatus: "Network: Sepolia Testnet",
+      usefulResources: "Useful Resources",
+      followUs: "Follow Me",
+      etherscan: "Etherscan",
+      docs: "Documentation",
+      faucet: "Sepolia Faucet",
+      copyright:
+        "© {{year}} DENNIS LEE's Blockchain Explorer. All rights reserved.",
+      privacy: "Privacy Policy",
+      terms: "Terms of Service",
+      contact: "Contact Us",
     },
   },
   zh: {
@@ -160,6 +175,19 @@ const resources = {
       networkError: "無法獲取網路狀態",
       addressError: "無法檢查地址",
       ensError: "無法解析 ENS 名稱",
+
+      explorerName: "區塊鏈瀏覽器",
+      footerDescription: "輕鬆探索以太坊網路。即時數據、智能合約互動等功能。",
+      networkStatus: "網路：Sepolia 測試網",
+      usefulResources: "實用資源",
+      followUs: "看看我",
+      etherscan: "Etherscan",
+      docs: "開發文件",
+      faucet: "Sepolia 水龍頭",
+      copyright: "© {{year}} 區塊鏈瀏覽器。保留所有權利。",
+      privacy: "隱私政策",
+      terms: "服務條款",
+      contact: "聯絡我們",
     },
   },
 };

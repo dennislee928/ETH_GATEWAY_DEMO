@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import { useTranslation } from "react-i18next";
-import "./componsnt-css/AdvancedFeatures.css";
+import "../components/component-css/AdvancedFeatures.css";
 
 const AdvancedFeatures = () => {
   const { t } = useTranslation();

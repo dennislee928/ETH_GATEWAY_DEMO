@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ethers } from "ethers";
 import { useTranslation } from "react-i18next";
-import "./componsnt-css/adds-on.css";
+import "../components/component-css/adds-on.css";
 
 const AddsOn = () => {
   const { t } = useTranslation();

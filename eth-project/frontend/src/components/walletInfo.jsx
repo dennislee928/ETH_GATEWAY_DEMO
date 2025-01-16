@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import useBlockchain from "../hooks/useBLockchain";
+import { useTranslation } from "react-i18next";
 
 const WalletInfo = () => {
+  const { t } = useTranslation();
   const [address, setAddress] = useState("");
   const [balance, setBalance] = useState(null);
   const { getBalance } = useBlockchain();
@@ -17,26 +19,28 @@ const WalletInfo = () => {
 
   return (
     <div>
-      <h2>錢包餘額查詢</h2>
+      <h2>{t("walletBalanceQuery")}</h2>
       <br />
       <input
         type="text"
         value={address}
         onChange={(e) => setAddress(e.target.value)}
-        placeholder="請輸入以太坊地址"
+        placeholder={t("enterEthAddress")}
       />
       <br />
       <br />
       <div className="example-address">
-        示例地址: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+        {t("exampleAddress")}: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
       </div>
       <br />
-      <button onClick={handleCheckBalance}>查詢餘額</button>
+      <button onClick={handleCheckBalance}>{t("checkBalance")}</button>
       <br />
       <br />
       {balance && (
         <div>
-          <h3>餘額：{balance} ETH</h3>
+          <h3>
+            {t("balance")}: {balance} ETH
+          </h3>
         </div>
       )}
     </div>

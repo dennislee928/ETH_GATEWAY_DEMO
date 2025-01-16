@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import useBlockchain from "../hooks/useBLockchain";
 import "../components/componsnt-css/BlockchainExplorer.css";
 import { ethers } from "ethers";
+import { useTranslation } from "react-i18next";
 
 const BlockchainExplorer = () => {
+  const { t } = useTranslation();
   // 狀態管理
   const [address, setAddress] = useState("");
   const [walletInfo, setWalletInfo] = useState({
@@ -20,8 +22,7 @@ const BlockchainExplorer = () => {
   // 引入區塊鏈功能
   const { getLatestBlock, getNetwork } = useBlockchain();
 
-  const QUICKNODE_HTTP_URL =
-    "https://tiniest-fragrant-isle.ethereum-sepolia.quiknode.pro/019655654452530d858bf60fe8a110d43ffad364/";
+  const QUICKNODE_HTTP_URL = "https://ethereum-holesky.publicnode.com";
 
   // 查詢錢包資訊
   const handleWalletSearch = async () => {
@@ -74,27 +75,31 @@ const BlockchainExplorer = () => {
 
   return (
     <div className="blockchain-explorer">
-      <h2>區塊鏈瀏覽器</h2>
+      <h2>{t("blockchainExplorer")}</h2>
 
-      {/* 網路資訊 */}
       <div className="info-section">
-        <h3>網路資訊</h3>
+        <h3>{t("networkInfo")}</h3>
         {blockchainInfo.network && (
           <div className="network-info">
-            <p>網路名稱: {blockchainInfo.network.name}</p>
-            <p>Chain ID: {blockchainInfo.network.chainId}</p>
+            <p>
+              {t("networkName")}: {blockchainInfo.network.name}
+            </p>
+            <p>
+              {t("chainId")}: {blockchainInfo.network.chainId}
+            </p>
           </div>
         )}
       </div>
 
-      {/* 最新區塊資訊 */}
       <div className="info-section">
-        <h3>最新區塊</h3>
+        <h3>{t("latestBlock")}</h3>
         {blockchainInfo.latestBlock && (
           <div className="block-info">
-            <p>區塊高度: {blockchainInfo.latestBlock.number}</p>
             <p>
-              時間戳:{" "}
+              {t("blockHeight")}: {blockchainInfo.latestBlock.number}
+            </p>
+            <p>
+              {t("timestamp")}:{" "}
               {new Date(
                 blockchainInfo.latestBlock.timestamp * 1000
               ).toLocaleString()}
@@ -103,26 +108,25 @@ const BlockchainExplorer = () => {
         )}
       </div>
 
-      {/* 錢包查詢 */}
       <div className="wallet-search">
-        <h3>錢包查詢</h3>
+        <h3>{t("walletSearch")}</h3>
         <div className="search-box">
           <input
             type="text"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
-            placeholder="請輸入以太坊地址"
+            placeholder={t("enterEthAddress")}
             className="address-input"
           />
           <div className="example-address">
-            示例地址: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+            {t("exampleAddress")}: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
           </div>
           <button
             onClick={handleWalletSearch}
             disabled={loading}
             className="search-button"
           >
-            {loading ? "查詢中..." : "查詢"}
+            {loading ? t("searching") : t("search")}
           </button>
         </div>
 
@@ -130,9 +134,13 @@ const BlockchainExplorer = () => {
 
         {walletInfo.balance !== null && (
           <div className="wallet-info">
-            <h4>錢包資訊</h4>
-            <p>餘額：{walletInfo.balance} ETH</p>
-            <p>交易次數：{walletInfo.txCount}</p>
+            <h4>{t("walletInfo")}</h4>
+            <p>
+              {t("balance")}: {walletInfo.balance} ETH
+            </p>
+            <p>
+              {t("txCount")}: {walletInfo.txCount}
+            </p>
           </div>
         )}
       </div>

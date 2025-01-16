@@ -122,7 +122,7 @@ const AdvancedFeatures = () => {
         provider.removeListener("block", unsubscribe);
       }
     };
-  }, []);
+  }, [provider]);
 
   // 使用說明內容
   const instructions = {

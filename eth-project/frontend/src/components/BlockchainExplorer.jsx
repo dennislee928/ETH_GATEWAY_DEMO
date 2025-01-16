@@ -71,7 +71,7 @@ const BlockchainExplorer = () => {
     };
 
     fetchBlockchainInfo();
-  }, []);
+  }, [getLatestBlock, getNetwork]);
 
   return (
     <div className="blockchain-explorer">

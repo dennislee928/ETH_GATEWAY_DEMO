@@ -2,7 +2,6 @@ import "./App.css";
 import { useTranslation } from "react-i18next";
 import WalletInfo from "./components/walletInfo";
 import BlockchainExplorer from "./components/BlockchainExplorer";
-import i18n from "./i18n";
 import AdvancedFeatures from "./components/AdvancedFeatures";
 import AddsOn from "./components/adds-on";
 import Footer from "./components/footer";

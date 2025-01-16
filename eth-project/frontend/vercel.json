@@ -8,7 +8,8 @@
       "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "build"
+        "distDir": "build",
+        "buildCommand": "CI=false npm run build"
       }
     }
   ],
@@ -35,5 +36,8 @@
         "cache-control": "public, max-age=0, must-revalidate"
       }
     }
-  ]
+  ],
+  "env": {
+    "CI": "false"
+  }
 }

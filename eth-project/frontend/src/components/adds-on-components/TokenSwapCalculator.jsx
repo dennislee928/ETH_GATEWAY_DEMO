@@ -3,6 +3,9 @@ import { ethers } from "ethers";
 import { useTranslation } from "react-i18next";
 import "./component-css/TokenSwapCalculator.css";
 
+const API_URL = "https://api.1inch.dev/v5.0/1";
+const API_KEY = "YOUR_API_KEY"; // 需要從 1inch 開發者門戶獲取 API key
+
 const TokenSwapCalculator = () => {
   const { t } = useTranslation();
   const [amount, setAmount] = useState("");
@@ -10,6 +13,7 @@ const TokenSwapCalculator = () => {
   const [toToken, setToToken] = useState("USDT");
   const [estimate, setEstimate] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const tokens = {
     ETH: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -20,16 +24,24 @@ const TokenSwapCalculator = () => {
   const calculateSwap = async () => {
     setLoading(true);
     try {
-      // 這裡使用 1inch API 獲取報價
       const response = await fetch(
-        `https://api.1inch.io/v5.0/1/quote?fromTokenAddress=${
-          tokens[fromToken]
-        }&toTokenAddress=${tokens[toToken]}&amount=${ethers.parseEther(amount)}`
+        `${API_URL}/quote?` +
+          `fromTokenAddress=${tokens[fromToken]}&` +
+          `toTokenAddress=${tokens[toToken]}&` +
+          `amount=${ethers.parseEther(amount)}`,
+        {
+          headers: {
+            Authorization: `Bearer ${API_KEY}`,
+            Accept: "application/json",
+          },
+        }
       );
+
       const data = await response.json();
       setEstimate(ethers.formatEther(data.toTokenAmount));
     } catch (err) {
       console.error(err);
+      setError(t("swapError"));
     }
     setLoading(false);
   };
@@ -75,6 +87,7 @@ const TokenSwapCalculator = () => {
           {t("estimatedOutput")}: {estimate} {toToken}
         </div>
       )}
+      {error && <div className="error">{error}</div>}
     </div>
   );
 };

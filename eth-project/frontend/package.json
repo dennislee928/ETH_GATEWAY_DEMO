@@ -2,20 +2,25 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://gateway.twister5.cf",
   "dependencies": {
-    "cra-template": "1.2.0",
-    "dotenv": "^16.4.7",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
     "ethers": "^6.13.5",
-    "i18next": "^24.2.1",
+    "i18next": "^23.2.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-i18next": "^15.4.0",
+    "react-i18next": "^13.0.1",
     "react-scripts": "5.0.1",
-    "web-vitals": "^3.0.0"
+    "web-vitals": "^2.1.4"
+  },
+  "devDependencies": {
+    "typescript": "4.9.5"
+  },
+  "overrides": {
+    "typescript": "4.9.5"
   },
   "scripts": {
-    "dev": "react-scripts start",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

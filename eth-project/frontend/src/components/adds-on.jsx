@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { ethers } from "ethers";
-import { useTranslation } from "react-i18next";
+
 import "../components/component-css/adds-on.css";
+import { useTranslation } from "react-i18next";
 
 const AddsOn = () => {
   const { t } = useTranslation();
@@ -18,12 +19,17 @@ const AddsOn = () => {
   const [address, setAddress] = useState("");
   const [txHash, setTxHash] = useState("");
 
-  const provider = new ethers.JsonRpcProvider(
-    "https://ethereum-sepolia.publicnode.com"
+  const provider = useMemo(
+    () => new ethers.JsonRpcProvider("https://ethereum-sepolia.publicnode.com"),
+    []
   );
 
   // 1. 事件監聽和歷史記錄
   const watchTransfers = async (address) => {
+    if (!ethers.isAddress(address)) {
+      setError(t("invalidAddress"));
+      return;
+    }
     setLoading(true);
     try {
       const filter = {
@@ -191,35 +197,30 @@ const AddsOn = () => {
     events: {
       title: t("eventInstructionsTitle"),
       content: [
-        t("eventInstruction1"), // "輸入合約地址來監聽轉帳事件"
-        t("eventInstruction2"), // "點擊 '監聽轉帳' 開始即時監控"
-        t("eventInstruction3"), // "點擊 '獲取歷史' 查看過去的轉帳記錄"
+        t("eventInstruction1"),
+        t("eventInstruction2"),
+        t("eventInstruction3"),
       ],
-      example: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+      example: t("eventExample"),
+      tips: [t("eventTip1"), t("eventTip2"), t("eventTip3")],
     },
     contracts: {
       title: t("contractInstructionsTitle"),
-      content: [
-        t("contractInstruction1"), // "輸入智能合約地址"
-        t("contractInstruction2"), // "獲取合約基本信息，包括名稱、符號和小數位"
-      ],
-      example: "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984", // Uniswap Token
+      content: [t("contractInstruction1"), t("contractInstruction2")],
+      example: t("contractExample"),
+      tips: [t("contractTip1"), t("contractTip2"), t("contractTip3")],
     },
     network: {
       title: t("networkInstructionsTitle"),
-      content: [
-        t("networkInstruction1"), // "點擊 '刷新狀態' 獲取最新網絡信息"
-        t("networkInstruction2"), // "輸入地址並點擊 '檢查地址' 查看詳情"
-      ],
-      example: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", // WETH
+      content: [t("networkInstruction1"), t("networkInstruction2")],
+      example: t("networkExample"),
+      tips: [t("networkTip1"), t("networkTip2"), t("networkTip3")],
     },
     transactions: {
       title: t("transactionInstructionsTitle"),
-      content: [
-        t("transactionInstruction1"), // "輸入交易哈希"
-        t("transactionInstruction2"), // "查看交易詳細信息"
-      ],
-      example: "0x123...",
+      content: [t("transactionInstruction1"), t("transactionInstruction2")],
+      example: t("transactionExample"),
+      tips: [t("txTip1"), t("txTip2"), t("txTip3")],
     },
   };
 
@@ -357,9 +358,9 @@ const AddsOn = () => {
               <div className="tips">
                 <h4>{t("tips")}</h4>
                 <ul>
-                  <li>{t("tip1")}</li>
-                  <li>{t("tip2")}</li>
-                  <li>{t("tip3")}</li>
+                  {instructions[activeTab].tips.map((tip, index) => (
+                    <li key={index}>{tip}</li>
+                  ))}
                 </ul>
               </div>
             </div>

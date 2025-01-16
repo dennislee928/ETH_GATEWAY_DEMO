@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { ethers } from "ethers";
 import { useTranslation } from "react-i18next";
-import "../components/component-css/AdvancedFeatures.css";
+import "./component-css/advanced-features.css";
 
 const AdvancedFeatures = () => {
   const { t } = useTranslation();
@@ -16,9 +16,11 @@ const AdvancedFeatures = () => {
     ensAddress: null,
   });
 
-  const QUICKNODE_HTTP_URL =
-    "https://tiniest-fragrant-isle.ethereum-sepolia.quiknode.pro/019655654452530d858bf60fe8a110d43ffad364/";
-  const provider = new ethers.JsonRpcProvider(QUICKNODE_HTTP_URL);
+  // 使用 useMemo 來避免每次渲染都重新創建 provider
+  const provider = useMemo(
+    () => new ethers.JsonRpcProvider("https://ethereum-sepolia.publicnode.com"),
+    []
+  );
 
   // 1. 交易相關功能
   const getTransactionDetails = async (txHash) => {
@@ -58,7 +60,7 @@ const AdvancedFeatures = () => {
         tokenBalance: ethers.formatEther(balance),
       }));
     } catch (error) {
-      setError(t("tokenError"));
+      setError(t("contractError"));
     } finally {
       setLoading(false);
     }
@@ -81,7 +83,7 @@ const AdvancedFeatures = () => {
         },
       }));
     } catch (error) {
-      setError(t("gasError"));
+      setError(t("networkError"));
     } finally {
       setLoading(false);
     }
@@ -116,7 +118,6 @@ const AdvancedFeatures = () => {
 
     subscribeToBlocks();
 
-    // 清理函數
     return () => {
       if (unsubscribe) {
         provider.removeListener("block", unsubscribe);
@@ -127,30 +128,24 @@ const AdvancedFeatures = () => {
   // 使用說明內容
   const instructions = {
     transaction: {
-      title: t("transactionInstructions"),
-      steps: [t("enterTxHashInstruction"), t("viewTxDetailsInstruction")],
+      title: t("transactionInstructionsTitle"),
+      steps: [t("transactionInstruction1"), t("transactionInstruction2")],
     },
     block: {
-      title: t("blockInstructions"),
-      steps: [
-        t("enterBlockNumberInstruction"),
-        t("viewBlockDetailsInstruction"),
-      ],
+      title: t("networkInstructionsTitle"),
+      steps: [t("networkInstruction1"), t("networkInstruction2")],
     },
     gas: {
       title: t("gasInstructions"),
-      steps: [t("clickRefreshInstruction"), t("viewGasPricesInstruction")],
+      steps: [t("gasInstruction1"), t("gasInstruction2")],
     },
     token: {
       title: t("tokenInstructions"),
-      steps: [
-        t("enterTokenAddressInstruction"),
-        t("viewTokenBalanceInstruction"),
-      ],
+      steps: [t("tokenInstruction1"), t("tokenInstruction2")],
     },
     ens: {
       title: t("ensInstructions"),
-      steps: [t("enterEnsNameInstruction"), t("viewEnsAddressInstruction")],
+      steps: [t("ensInstruction1"), t("ensInstruction2")],
     },
   };
 
@@ -176,7 +171,6 @@ const AdvancedFeatures = () => {
       {activeTab === "instructions" ? (
         <div className="instructions-container">
           <h3>{t("howToUse")}</h3>
-
           {Object.entries(instructions).map(([key, section]) => (
             <div key={key} className="instruction-section">
               <h4>{section.title}</h4>
@@ -228,34 +222,11 @@ const AdvancedFeatures = () => {
           <section className="feature-section">
             <h3>{t("gasPrice")}</h3>
             <div className="feature-content">
-              <button onClick={getGasPrice} className="refresh-button">
-                {t("refreshGasPrice")}
-              </button>
+              <button onClick={getGasPrice}>{t("refresh")}</button>
               {data.gasInfo && (
-                <div className="gas-info">
-                  <p>Gas Price: {data.gasInfo.gasPrice} Gwei</p>
-                  <p>Max Fee: {data.gasInfo.maxFeePerGas} Gwei</p>
-                  <p>Priority Fee: {data.gasInfo.maxPriorityFeePerGas} Gwei</p>
-                </div>
-              )}
-            </div>
-          </section>
-
-          {/* Token 餘額 */}
-          <section className="feature-section">
-            <h3>{t("tokenBalance")}</h3>
-            <div className="feature-content">
-              <input
-                type="text"
-                placeholder={t("enterTokenAddress")}
-                onChange={(e) =>
-                  getTokenBalance(e.target.value, "YOUR_WALLET_ADDRESS")
-                }
-              />
-              {data.tokenBalance && (
-                <p className="token-balance">
-                  Token Balance: {data.tokenBalance}
-                </p>
+                <pre className="result-display">
+                  {JSON.stringify(data.gasInfo, null, 2)}
+                </pre>
               )}
             </div>
           </section>
@@ -270,15 +241,15 @@ const AdvancedFeatures = () => {
                 onChange={(e) => resolveEns(e.target.value)}
               />
               {data.ensAddress && (
-                <p className="ens-result">Address: {data.ensAddress}</p>
+                <pre className="result-display">{data.ensAddress}</pre>
               )}
             </div>
           </section>
         </div>
       )}
 
-      {loading && <div className="loading-indicator">{t("loading")}</div>}
-      {error && <div className="error-message">{error}</div>}
+      {loading && <div className="loading">{t("loading")}</div>}
+      {error && <div className="error">{error}</div>}
     </div>
   );
 };

@@ -1,8 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./component-css/Navbar.css";
+import "./component-css/navbar.css";
+import { useTranslation } from "react-i18next";
 
-function Navbar() {
+const Navbar = () => {
+  const { t } = useTranslation();
+
   return (
     <nav className="navbar">
       <div className="nav-container">
@@ -12,18 +15,18 @@ function Navbar() {
         <ul className="nav-menu">
           <li className="nav-item">
             <Link to="/" className="nav-link">
-              首頁
+              {t("home")}
             </Link>
           </li>
           <li className="nav-item">
             <Link to="/faucet" className="nav-link">
-              水龍頭
+              {t("faucet")}
             </Link>
           </li>
         </ul>
       </div>
     </nav>
   );
-}
+};
 
 export default Navbar;

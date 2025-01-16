@@ -11,7 +11,7 @@ const Faucet = () => {
   const [dots, setDots] = useState("");
   const [error, setError] = useState(null);
 
-  // 監控餘額變化
+  // 監控餘額變化.
   useEffect(() => {
     let dotsInterval;
     if (isMonitoring) {

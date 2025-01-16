@@ -60,6 +60,9 @@ end
 3. 執行腳本
 
    ```bash
+   # 安裝依賴
+   npm install
+
    # 部署合約
    npm run deploy
 

@@ -75,8 +75,6 @@ const BlockchainExplorer = () => {
 
   return (
     <div className="blockchain-explorer">
-      <h2>{t("blockchainExplorer")}</h2>
-
       <div className="info-section">
         <h3>{t("networkInfo")}</h3>
         {blockchainInfo.network && (

@@ -2,12 +2,25 @@ const { ethers } = require("ethers");
 const fs = require("fs");
 const path = require("path");
 require("dotenv").config();
+const { checkRequiredEnvVars } = require("../utils/envCheck");
 
 async function main() {
   try {
+    // 檢查環境變數
+    checkRequiredEnvVars();
+
+    // 確保 private key 格式正確
+    const privateKey = process.env.PRIVATE_KEY.startsWith("0x")
+      ? process.env.PRIVATE_KEY
+      : `0x${process.env.PRIVATE_KEY}`;
+
     // 連接到 Sepolia 測試網
     const provider = new ethers.JsonRpcProvider(process.env.QUICKNODE_URL);
-    const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
+    const wallet = new ethers.Wallet(privateKey, provider);
+
+    // 驗證連接
+    const network = await provider.getNetwork();
+    console.log("連接到網路:", network.name);
 
     // 獲取部署者資訊
     const balance = await wallet.getBalance();

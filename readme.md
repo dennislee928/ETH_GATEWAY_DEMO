@@ -68,7 +68,7 @@ eth-project/
 4. 推送到分支
 5. 創建 Pull Request
 
-```mermaid.md
+```mermaid
 graph TD
     User[用戶] --> |訪問| Frontend[前端應用]
     Frontend --> |連接錢包| MetaMask[MetaMask]

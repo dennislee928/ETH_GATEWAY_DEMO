@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./component-css/navbar.css";
+import "../styles/navbar.css";
 import { useTranslation } from "react-i18next";
 
 const Navbar = () => {

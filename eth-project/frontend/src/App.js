@@ -19,8 +19,8 @@ function App() {
       <nav className="header">
         <div className="header-content">
           <div>
-            <h1 className="main-title">{t("title")}</h1>
-            <p className="subtitle">{t("subtitle")}</p>
+            <h1 className="main-title">Holesky Explorer</h1>
+            <p className="subtitle">Explore the Ethereum Test Network</p>
           </div>
           <button onClick={toggleLanguage} className="language-toggle">
             {i18n.language === "zh" ? "English" : "中文"}

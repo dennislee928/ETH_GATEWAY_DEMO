@@ -1,96 +1,31 @@
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  min-height: 100vh;
 }
 
 .container {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
-  color: #000000;
-  padding: 2rem;
-}
-
-.header {
-  text-align: center;
-  margin-bottom: 3rem;
-}
-
-.main-title {
-  font-size: 2.5rem;
-  background: linear-gradient(90deg, #00f2fe, #4facfe);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 0.5rem;
-}
-
-.subtitle {
-  color: #333;
-  font-size: 1.1rem;
-}
-
-.content-wrapper {
+  flex: 1;
   max-width: 1200px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
-}
-
-@media (min-width: 768px) {
-  .content-wrapper {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-.card {
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 16px;
   padding: 2rem;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: transform 0.3s ease;
+  width: 100%;
 }
 
-.card:hover {
-  transform: translateY(-5px);
+/* 主頁面布局 */
+.home-content {
+  display: grid;
+  gap: 2rem;
+  margin-bottom: 2rem;
 }
 
-.section-title {
-  font-size: 1.5rem;
-  margin-bottom: 1.5rem;
-  color: #000000;
+/* 響應式設計 */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .home-content {
+    grid-template-columns: 1fr;
+  }
 }

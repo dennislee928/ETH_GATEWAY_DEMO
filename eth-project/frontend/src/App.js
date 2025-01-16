@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import WalletInfo from "./components/walletInfo";
 import BlockchainExplorer from "./components/BlockchainExplorer";
 import i18n from "./i18n";
+import AdvancedFeatures from "./components/AdvancedFeatures";
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -35,6 +36,11 @@ function App() {
         <section className="card explorer-section">
           <h2 className="section-title">{t("blockchainExplorer")}</h2>
           <BlockchainExplorer />
+        </section>
+
+        <section className="card advanced-section">
+          <h2 className="section-title">{t("advancedFeatures")}</h2>
+          <AdvancedFeatures />
         </section>
       </div>
     </div>

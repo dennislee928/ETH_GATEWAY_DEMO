@@ -339,10 +339,8 @@ const AddsOn = () => {
 
         {/* 添加說明部分 */}
         <div className="instructions-section">
-          <h3 className="instructions-title">{t("instructions")}</h3>
-
+          <h3>{t("instructions")}</h3>
           <div className="instructions-content">
-            {/* 當前標籤頁的說明 */}
             <div className="current-tab-instructions">
               <h4>{instructions[activeTab].title}</h4>
               <ul>
@@ -351,10 +349,9 @@ const AddsOn = () => {
                 ))}
               </ul>
               <div className="example">
-                <span className="example-label">{t("example")}:</span>
+                <span>{t("example")}:</span>
                 <code>{instructions[activeTab].example}</code>
               </div>
-              {/* 提示和建議 */}
               <div className="tips">
                 <h4>{t("tips")}</h4>
                 <ul>

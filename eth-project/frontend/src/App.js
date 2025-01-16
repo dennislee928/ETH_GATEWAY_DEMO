@@ -7,6 +7,7 @@ import AddsOn from "./components/adds-on";
 import Footer from "./components/footer";
 import Faucet from "./components/Faucet.jsx";
 import "./App.css";
+import "./i18n"; // 確保導入 i18n 配置
 
 function App() {
   return (

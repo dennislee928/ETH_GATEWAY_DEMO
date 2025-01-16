@@ -65,7 +65,7 @@ const Footer = () => {
         {/* 中間：網站資訊 */}
         <div className="footer-section">
           <div className="footer-logo">🔍 {t("explorerName")}</div>
-          <p className="footer-description">{t("footerDescription")}</p>
+          <p className="footer-description">{t("for(int c;c<100;c++)")}</p>
           <div className="network-status">
             <span className="status-dot"></span>
             {t("networkStatus")}

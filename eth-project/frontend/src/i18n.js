@@ -1,59 +1,48 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+import LanguageDetector from "i18next-browser-languagedetector";
 
 const resources = {
   en: {
     translation: {
-      title: "Holesky Explorer",
-      subtitle: "Explore the Ethereum Test Network",
-      walletInfo: "Wallet Information",
-      blockchainExplorer: "Blockchain Explorer",
+      // Advanced Features
+      transactionDetails: "Transaction Details",
+      blockDetails: "Block Details",
+      gasPrice: "Gas Price",
+      ensLookup: "ENS Lookup",
+      features: "Features",
+      enterBlockNumber: "Enter block number",
+      success: "Success",
+      failed: "Failed",
 
-      // Events Instructions
-      eventInstructionsTitle: "Monitor Token Transfers",
-      eventInstruction1:
-        "Enter the token contract address to monitor transfers",
-      eventInstruction2:
-        "Click 'Watch' to start real-time monitoring of transfers",
-      eventInstruction3: "View transfer history and track token movements",
-
-      // Contract Instructions
-      contractInstructionsTitle: "Smart Contract Information",
-      contractInstruction1: "Enter the smart contract address",
-      contractInstruction2:
-        "View contract details including name, symbol, and decimals",
-
-      // Network Instructions
-      networkInstructionsTitle: "Network Status",
-      networkInstruction1:
-        "Click 'Refresh Stats' to get latest network information",
-      networkInstruction2:
-        "Enter address and click 'Check Address' for details",
+      // Instructions
+      howToUse: "How to Use",
+      instructions: "Instructions",
 
       // Transaction Instructions
       transactionInstructionsTitle: "Transaction Analysis",
-      transactionInstruction1: "Enter a transaction hash to analyze",
-      transactionInstruction2:
-        "View detailed transaction information including status and gas usage",
+      transactionInstruction1: "Enter transaction hash to analyze",
+      transactionInstruction2: "View transaction details and status",
 
-      // Examples
-      example: "Example Address",
-      eventExample:
-        "0x742d35Cc6634C0532925a3b844Bc454e4438f44e (USDT Contract)",
-      contractExample: "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984 (UNI Token)",
-      networkExample: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2 (WETH)",
-      transactionExample: "0x123... (Any valid transaction hash)",
+      // Network Instructions
+      networkInstructionsTitle: "Network Status",
+      networkInstruction1: "Check current network status",
+      networkInstruction2: "View latest block information",
 
-      // Tips
-      tips: "Important Tips",
-      tip1: "Always verify contract addresses on Etherscan before interacting",
-      tip2: "Monitor gas prices to optimize transaction costs",
-      tip3: "Use Sepolia testnet for testing before mainnet deployment",
+      // Gas Instructions
+      gasInstructions: "Gas Price Guide",
+      gasInstruction1: "Monitor current gas prices",
+      gasInstruction2: "Set appropriate gas limits",
 
-      // UI Elements
-      instructions: "Usage Instructions",
-      loading: "Loading...",
-      error: "An error occurred",
+      // Token Instructions
+      tokenInstructions: "Token Operations",
+      tokenInstruction1: "Enter token contract address",
+      tokenInstruction2: "View token details and transfers",
+
+      // ENS Instructions
+      ensInstructions: "ENS Resolution",
+      ensInstruction1: "Enter ENS name to resolve",
+      ensInstruction2: "Get corresponding ETH address",
 
       // Tabs
       events: "Events",
@@ -61,222 +50,154 @@ const resources = {
       network: "Network",
       transactions: "Transactions",
 
-      // Buttons
+      // Event Related
+      transferEvents: "Transfer Events",
+      enterContractAddress: "Enter contract address",
       watchTransfers: "Watch Transfers",
       getHistory: "Get History",
-      getContractInfo: "Get Contract Info",
-      refreshStats: "Refresh Stats",
-      checkAddress: "Check Address",
-      parseTransaction: "Analyze Transaction",
 
-      // Input Placeholders
-      enterContractAddress: "Enter contract address",
-      enterTxHash: "Enter transaction hash",
-      enterAddress: "Enter address",
-      enterEnsName: "Enter ENS name",
+      // Event Instructions
+      eventInstructionsTitle: "Event Monitoring",
+      eventInstruction1: "Enter contract address to monitor",
+      eventInstruction2: "Start monitoring transfers",
+      eventInstruction3: "View transfer history",
+      eventExample: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
 
-      // Error Messages
-      txError: "Failed to fetch transaction details",
-      blockError: "Failed to fetch block details",
-      contractError: "Failed to fetch contract information",
-      eventError: "Failed to monitor events",
-      historyError: "Failed to fetch transfer history",
-      networkError: "Failed to fetch network stats",
-      addressError: "Failed to check address",
-      ensError: "Failed to resolve ENS name",
+      // Tips
+      tips: "Tips",
+      eventTip1: "Monitor gas usage for large contracts",
+      eventTip2: "Use WebSocket for better performance",
+      eventTip3: "Use filters for specific events",
 
-      explorerName: "Blockchain Explorer",
-      footerDescription:
-        "Explore the Ethereum network with ease. Real-time data, smart contract interactions, and more.",
-      networkStatus: "Network: Sepolia Testnet",
-      usefulResources: "Useful Resources",
-      followUs: "Follow Me",
-      etherscan: "Etherscan",
-      docs: "Documentation",
-      faucet: "Sepolia Faucet",
-      copyright: "© {{year}} Blockchain Explorer. All rights reserved.",
-      privacy: "Privacy Policy",
-      terms: "Terms of Service",
-      contact: "Contact Us",
+      // Examples
+      example: "Example",
 
-      // Navbar 相關
-      home: "Home",
+      // Contract Tips
+      contractTip1: "Verify contract source code",
+      contractTip2: "Check contract balance",
+      contractTip3: "Review contract interactions",
 
-      // Faucet 頁面相關
-      faucetTitle: "Sepolia Testnet Faucet",
+      // Network Tips
+      networkTip1: "Monitor network congestion",
+      networkTip2: "Check gas prices regularly",
+      networkTip3: "Use appropriate network",
 
-      checkBalance: "Check Balance",
-      currentBalance: "Current Balance",
-      monitoringStatus: "Monitoring...",
-      receivedTokens: "Received Tokens!",
-
-      // Faucet 說明
-      faucetDescription: "Get test ETH for Sepolia network",
-      availableFaucets: "Available Faucets",
-      quickNodeFaucet: "QuickNode (Recommended)",
-      powFaucet: "PoW Mining Faucet",
-
-      // Faucet 特性
-      captchaOnly: "Captcha verification only",
-      dailyClaim: "Can claim daily",
-      noVerification: "No verification needed",
-      browserMining: "Browser mining",
-
-      // 錯誤訊息
-      invalidAddress: "Invalid ETH address",
-
-      checkingBalance: "Checking balance...",
-
-      // 按鈕文字
-      refresh: "Refresh",
-      stop: "Stop Monitoring",
-      claim: "Claim Tokens",
-
-      // Events Section
-
-      eventTip1: "Monitor gas consumption when watching large contracts",
-      eventTip2: "Use WebSocket provider for better performance",
-      eventTip3: "Use filters to monitor specific events only",
+      // Transaction Tips
+      txTip1: "Verify transaction details",
+      txTip2: "Check gas settings",
+      txTip3: "Monitor transaction status",
     },
   },
   zh: {
     translation: {
-      title: "Holesky 瀏覽器",
-      subtitle: "探索以太坊測試網路的世界",
-      walletInfo: "錢包資訊",
-      blockchainExplorer: "區塊鏈瀏覽器",
+      // 繁體中文翻譯
+      transactionDetails: "交易詳情",
+      blockDetails: "區塊詳情",
+      gasPrice: "Gas 價格",
+      ensLookup: "ENS 查詢",
+      features: "功能",
+      enterBlockNumber: "輸入區塊號碼",
+      success: "成功",
+      failed: "失敗",
 
-      // Events Instructions
-      eventInstructionsTitle: "代幣轉帳監控",
-      eventInstruction1: "輸入代幣合約地址以監控轉帳",
-      eventInstruction2: "點擊「監控」開始即時追蹤轉帳",
-      eventInstruction3: "查看轉帳歷史記錄和追蹤代幣流向",
+      // 說明
+      howToUse: "使用說明",
+      instructions: "操作指南",
 
-      // Contract Instructions
-      contractInstructionsTitle: "智能合約資訊",
-      contractInstruction1: "輸入智能合約地址",
-      contractInstruction2: "查看合約詳情，包括名稱、符號和小數位",
-
-      // Network Instructions
-      networkInstructionsTitle: "網路狀態",
-      networkInstruction1: "點擊「刷新狀態」獲取最新網路資訊",
-      networkInstruction2: "輸入地址並點擊「檢查地址」查看詳情",
-
-      // Transaction Instructions
+      // 交易說明
       transactionInstructionsTitle: "交易分析",
       transactionInstruction1: "輸入交易哈希進行分析",
-      transactionInstruction2: "查看詳細交易資訊，包括狀態和 gas 使用情況",
+      transactionInstruction2: "查看交易詳情和狀態",
 
-      // Examples
-      example: "範例地址",
-      eventExample: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e (USDT合約)",
-      contractExample: "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984 (UNI代幣)",
-      networkExample: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2 (WETH)",
-      transactionExample: "0x123... (任何有效的交易哈希)",
+      // 網路說明
+      networkInstructionsTitle: "網路狀態",
+      networkInstruction1: "檢查當前網路狀態",
+      networkInstruction2: "查看最新區塊資訊",
 
-      // Tips
-      tips: "重要提示",
-      tip1: "與合約互動前，請務必在 Etherscan 上驗證合約地址",
-      tip2: "監控 gas 價格以優化交易成本",
-      tip3: "在部署到主網前，請先在 Sepolia 測試網進行測試",
+      // Gas 說明
+      gasInstructions: "Gas 價格指南",
+      gasInstruction1: "監控當前 gas 價格",
+      gasInstruction2: "設置適當的 gas 限制",
 
-      // UI Elements
-      instructions: "使用說明",
-      loading: "載入中...",
-      error: "發生錯誤",
+      // 代幣說明
+      tokenInstructions: "代幣操作",
+      tokenInstruction1: "輸入代幣合約地址",
+      tokenInstruction2: "查看代幣詳情和轉帳",
 
-      // Tabs
+      // ENS 說明
+      ensInstructions: "ENS 解析",
+      ensInstruction1: "輸入 ENS 名稱進行解析",
+      ensInstruction2: "獲取對應的 ETH 地址",
+
+      // 分頁
       events: "事件",
       contracts: "合約",
       network: "網路",
       transactions: "交易",
 
-      // Buttons
+      // 事件相關
+      transferEvents: "轉帳事件",
+      enterContractAddress: "輸入合約地址",
       watchTransfers: "監聽轉帳",
       getHistory: "獲取歷史",
-      getContractInfo: "獲取合約資訊",
-      refreshStats: "刷新狀態",
-      checkAddress: "檢查地址",
-      parseTransaction: "分析交易",
 
-      // Input Placeholders
-      enterContractAddress: "輸入合約地址",
-      enterTxHash: "輸入交易哈希",
-      enterAddress: "輸入地址",
-      enterEnsName: "輸入 ENS 名稱",
+      // 事件說明
+      eventInstructionsTitle: "事件監控",
+      eventInstruction1: "輸入合約地址以監控",
+      eventInstruction2: "開始監控轉帳",
+      eventInstruction3: "查看轉帳歷史",
+      eventExample: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
 
-      // Error Messages
-      txError: "無法獲取交易詳情",
-      blockError: "無法獲取區塊詳情",
-      contractError: "無法獲取合約資訊",
-      eventError: "無法監控事件",
-      historyError: "無法獲取轉帳歷史",
-      networkError: "無法獲取網路狀態",
-      addressError: "無法檢查地址",
-      ensError: "無法解析 ENS 名稱",
-
-      explorerName: "區塊鏈瀏覽器",
-      footerDescription: "輕鬆探索以太坊網路。即時數據、智能合約互動等功能。",
-      networkStatus: "網路：Sepolia 測試網",
-      usefulResources: "實用資源",
-      followUs: "看看我",
-      etherscan: "Etherscan",
-      docs: "開發文件",
-      faucet: "Sepolia 水龍頭",
-      copyright: "© {{year}} 區塊鏈瀏覽器。保留所有權利。",
-      privacy: "隱私政策",
-      terms: "服務條款",
-      contact: "聯絡我們",
-
-      // Navbar 相關
-      home: "首頁",
-
-      // Faucet 頁面相關
-      faucetTitle: "Sepolia 測試網水龍頭",
-
-      checkBalance: "檢查餘額",
-      currentBalance: "當前餘額",
-      monitoringStatus: "監控中...",
-      receivedTokens: "收到測試幣！",
-
-      // Faucet 說明
-      faucetDescription: "獲取 Sepolia 測試網的測試幣",
-      availableFaucets: "可用的水龍頭",
-      quickNodeFaucet: "QuickNode (推薦)",
-      powFaucet: "PoW 挖礦水龍頭",
-
-      // Faucet 特性
-      captchaOnly: "只需驗證碼",
-      dailyClaim: "每天可以領取",
-      noVerification: "不需要驗證",
-      browserMining: "使用瀏覽器挖礦",
-
-      // 錯誤訊息
-      invalidAddress: "無效的 ETH 地址",
-
-      checkingBalance: "檢查餘額中...",
-
-      // 按鈕文字
-      refresh: "重新整理",
-      stop: "停止監控",
-      claim: "領取測試幣",
-
-      // Events Section
-
+      // 提示
+      tips: "提示",
       eventTip1: "監控大型合約時注意 gas 消耗",
-      eventTip2: "使用 WebSocket 提供者以獲得更好的性能",
-      eventTip3: "使用過濾器只監聽特定的事件",
+      eventTip2: "使用 WebSocket 以獲得更好的性能",
+      eventTip3: "使用過濾器只監聽特定事件",
+
+      // 範例
+      example: "範例",
+
+      // 合約提示
+      contractTip1: "驗證合約原始碼",
+      contractTip2: "檢查合約餘額",
+      contractTip3: "檢視合約互動",
+
+      // 網路提示
+      networkTip1: "監控網路擁塞狀況",
+      networkTip2: "定期檢查 gas 價格",
+      networkTip3: "使用適當的網路",
+
+      // 交易提示
+      txTip1: "驗證交易詳情",
+      txTip2: "檢查 gas 設定",
+      txTip3: "監控交易狀態",
     },
   },
 };
 
-i18n.use(initReactI18next).init({
-  resources,
-  lng: "zh",
-  fallbackLng: "en",
-  interpolation: {
-    escapeValue: false,
-  },
-});
+i18n
+  .use(LanguageDetector) // 添加語言檢測
+  .use(initReactI18next)
+  .init({
+    resources,
+    fallbackLng: "en",
+    detection: {
+      order: ["navigator", "htmlTag", "path", "subdomain"],
+      lookupFromPathIndex: 0,
+      // 台灣地區使用繁體中文
+      checkWhitelist: true,
+      whitelist: ["en", "zh"],
+      // 將台灣地區對應到繁體中文
+      convertLanguageCodes: [
+        {
+          from: "zh-TW",
+          to: "zh",
+        },
+      ],
+    },
+    interpolation: {
+      escapeValue: false,
+    },
+  });
 
 export default i18n;

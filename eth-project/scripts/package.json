@@ -1,13 +1,14 @@
 {
-  "name": "eth-project",
+  "name": "eth-scripts",
   "version": "1.0.0",
   "scripts": {
-    "deploy": "node scripts/deploy.js",
-    "interact": "node scripts/interact.js",
-    "monitor": "node scripts/monitors/websocket.js"
+    "deploy": "node contracts/deploy.js",
+    "interact": "node contracts/interact.js",
+    "monitor": "node monitors/websocket.js"
   },
   "dependencies": {
     "ethers": "^6.13.5",
-    "dotenv": "^16.4.1"
+    "dotenv": "^16.4.1",
+    "winston": "^3.11.0"
   }
 }

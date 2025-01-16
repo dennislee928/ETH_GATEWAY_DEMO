@@ -4,7 +4,7 @@ pragma solidity ^0.8.19;
 
 contract GuessNumberGame {
     address private owner;
-    uint256 private constant GAME_COST = 0.01 ether;
+    uint256 private constant GAME_COST = 0.00001 ether;
     uint256 private constant MIN_NUMBER = 1;
     uint256 private constant MAX_NUMBER = 10;
     

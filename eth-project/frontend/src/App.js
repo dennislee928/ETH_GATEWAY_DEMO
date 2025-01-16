@@ -5,7 +5,7 @@ import BlockchainExplorer from "./components/BlockchainExplorer";
 import AdvancedFeatures from "./components/AdvancedFeatures";
 import AddsOn from "./components/adds-on";
 import Footer from "./components/footer";
-import Faucet from "./components/Faucet";
+import Faucet from "./components/Faucet.jsx";
 import "./App.css";
 
 function App() {

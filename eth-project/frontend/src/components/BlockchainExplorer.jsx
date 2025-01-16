@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import useBlockchain from "../hooks/useBLockchain";
 import "../components/componsnt-css/BlockchainExplorer.css";
+import { ethers } from "ethers";
 
 const BlockchainExplorer = () => {
   // 狀態管理
@@ -17,8 +18,10 @@ const BlockchainExplorer = () => {
   const [error, setError] = useState(null);
 
   // 引入區塊鏈功能
-  const { getBalance, getTransactionCount, getLatestBlock, getNetwork } =
-    useBlockchain();
+  const { getLatestBlock, getNetwork } = useBlockchain();
+
+  const QUICKNODE_HTTP_URL =
+    "https://tiniest-fragrant-isle.ethereum-sepolia.quiknode.pro/019655654452530d858bf60fe8a110d43ffad364/";
 
   // 查詢錢包資訊
   const handleWalletSearch = async () => {
@@ -31,18 +34,17 @@ const BlockchainExplorer = () => {
     setError(null);
 
     try {
-      const [balance, txCount] = await Promise.all([
-        getBalance(address),
-        getTransactionCount(address),
-      ]);
+      const provider = new ethers.JsonRpcProvider(QUICKNODE_HTTP_URL);
+      const txCount = await provider.getTransactionCount(address);
+      const balance = await provider.getBalance(address);
 
       setWalletInfo({
-        balance,
+        balance: ethers.formatEther(balance),
         txCount,
       });
     } catch (error) {
-      setError("查詢錢包資訊失敗");
-      console.error(error);
+      console.error("Error:", error);
+      setError("獲取錢包資訊時發生錯誤");
     } finally {
       setLoading(false);
     }
@@ -112,6 +114,9 @@ const BlockchainExplorer = () => {
             placeholder="請輸入以太坊地址"
             className="address-input"
           />
+          <div className="example-address">
+            示例地址: 0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+          </div>
           <button
             onClick={handleWalletSearch}
             disabled={loading}

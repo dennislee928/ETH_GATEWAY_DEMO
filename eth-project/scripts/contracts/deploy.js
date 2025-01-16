@@ -14,7 +14,10 @@ async function main() {
     console.log("部署者餘額:", ethers.formatEther(balance), "ETH");
 
     // 讀取合約原始碼
-    const contractPath = path.join(__dirname, "../contracts/SimpleStorage.sol");
+    const contractPath = path.join(
+      __dirname,
+      "../../contracts/SimpleStorage.sol"
+    );
     const source = fs.readFileSync(contractPath, "utf8");
 
     // 部署合約
@@ -59,7 +62,7 @@ async function main() {
     };
 
     // 寫入部署資訊到文件
-    const deploymentPath = path.join(__dirname, "../deployment.json");
+    const deploymentPath = path.join(__dirname, "../../deployment.json");
     fs.writeFileSync(deploymentPath, JSON.stringify(deploymentInfo, null, 2));
 
     console.log("部署成功！");
@@ -89,4 +92,8 @@ async function main() {
   }
 }
 
-main().catch(console.error);
+if (require.main === module) {
+  main().catch(console.error);
+}
+
+module.exports = main;

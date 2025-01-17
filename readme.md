@@ -68,6 +68,8 @@ eth-project/
 4. 推送到分支
 5. 創建 Pull Request
 
+## 系統架構圖
+
 ```mermaid
 graph TD
     User[用戶] --> |訪問| Frontend[前端應用]
@@ -96,6 +98,74 @@ graph TD
         Mainnet[以太坊主網]
         Testnet[Sepolia測試網]
     end
+```
+
+## 組件數據流
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Frontend
+    participant APIs
+    participant Blockchain
+
+    User->>Frontend: 訪問應用
+    Frontend->>MetaMask: 請求連接錢包
+    MetaMask-->>Frontend: 返回錢包地址
+
+    loop 價格更新
+        Frontend->>CoinGecko: 請求代幣價格
+        CoinGecko-->>Frontend: 返回最新價格
+    end
+
+    User->>Frontend: 輸入交換金額
+    Frontend->>OneInch: 請求交換報價
+    OneInch-->>Frontend: 返回報價數據
+
+    User->>Frontend: 輸入ENS域名
+    Frontend->>ENS: 解析域名
+    ENS-->>Frontend: 返回地址
+
+    User->>Frontend: 玩遊戲
+    Frontend->>Blockchain: 發送交易
+    Blockchain-->>Frontend: 返回結果
+```
+
+## 合約功能圖
+
+```mermaid
+classDiagram
+    class GuessNumberGame {
+        +address owner
+        +uint256 GAME_COST
+        +mapping lastGameResult
+        +mapping hasGuessed
+        +constructor()
+        +guess(uint256)
+        +getResult()
+        +getBalance()
+        +withdraw()
+        +receive()
+    }
+```
+
+## 數據處理流程
+
+```mermaid
+graph TD
+    A[開始] --> B[連接錢包]
+    B --> C{是否連接成功?}
+    C -->|是| D[初始化合約]
+    C -->|否| Z[錯誤提示]
+    D --> E[監聽事件]
+    D --> F[獲取價格數據]
+    E --> G[處理用戶操作]
+    F --> H[更新UI]
+    G --> I[發送交易]
+    H --> J[顯示結果]
+    I --> J
+    J --> K[結束]
+    Z --> K
 ```
 
 ## 授權

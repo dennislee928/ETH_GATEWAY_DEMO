@@ -10,7 +10,11 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@adraffy/ens-normalize": "^1.11.0",
+    "dotenv": "^16.4.7",
     "ethereumjs-wallet": "^1.0.2",
-    "keythereum": "^2.0.0"
+    "ethers": "^6.13.5",
+    "keythereum": "^2.0.0",
+    "solc": "^0.8.28"
   }
 }

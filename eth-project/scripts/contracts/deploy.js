@@ -26,14 +26,14 @@ async function main() {
     // 讀取和編譯合約
     const contractPath = path.join(
       __dirname,
-      "../../contracts/SimpleStorage.sol"
+      "../../contracts/GuessNumberGame.sol"
     );
     const source = fs.readFileSync(contractPath, "utf8");
 
     const input = {
       language: "Solidity",
       sources: {
-        "SimpleStorage.sol": {
+        "GuessNumberGame.sol": {
           content: source,
         },
       },
@@ -48,7 +48,7 @@ async function main() {
 
     // 編譯合約
     const output = JSON.parse(solc.compile(JSON.stringify(input)));
-    const contract = output.contracts["SimpleStorage.sol"]["SimpleStorage"];
+    const contract = output.contracts["GuessNumberGame.sol"]["GuessNumberGame"];
 
     // 獲取 ABI 和 Bytecode
     const abi = contract.abi;
@@ -56,21 +56,21 @@ async function main() {
 
     // 創建合約工廠
     const factory = new ethers.ContractFactory(abi, bytecode, wallet);
-    console.log("正在部署合約...");
+    console.log("正在部署遊戲合約...");
 
     // 部署合約
-    const simpleStorage = await factory.deploy();
-    await simpleStorage.waitForDeployment();
+    const gameContract = await factory.deploy();
+    await gameContract.waitForDeployment();
 
     // 獲取部署收據
     const receipt = await provider.getTransactionReceipt(
-      simpleStorage.deploymentTransaction().hash
+      gameContract.deploymentTransaction().hash
     );
 
     // 保存部署資訊
     const deploymentInfo = {
-      contractAddress: await simpleStorage.getAddress(),
-      deploymentHash: simpleStorage.deploymentTransaction().hash,
+      contractAddress: await gameContract.getAddress(),
+      deploymentHash: gameContract.deploymentTransaction().hash,
       deployer: wallet.address,
       timestamp: new Date().toISOString(),
       network: network.name,
@@ -82,20 +82,9 @@ async function main() {
     const deploymentPath = path.join(__dirname, "../../deployment.json");
     fs.writeFileSync(deploymentPath, JSON.stringify(deploymentInfo, null, 2));
 
-    console.log("部署成功！");
-    console.log("合約地址:", await simpleStorage.getAddress());
+    console.log("遊戲合約部署成功！");
+    console.log("合約地址:", await gameContract.getAddress());
     console.log("部署資訊已保存到 deployment.json");
-
-    // 測試合約
-    const value = await simpleStorage.getValue();
-    console.log("初始值:", value.toString());
-
-    const tx = await simpleStorage.setValue(42);
-    await tx.wait();
-    console.log("交易確認，新值已設置");
-
-    const newValue = await simpleStorage.getValue();
-    console.log("新值:", newValue.toString());
   } catch (error) {
     console.error("部署錯誤:", error);
     process.exit(1);

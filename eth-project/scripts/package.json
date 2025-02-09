@@ -7,13 +7,16 @@
     "monitor": "node monitors/websocket.js",
     "test-qn": "node quicknode-test.js",
     "examples": "node quicknode-examples.js",
-    "faucet": "node utils/alchemy-faucet.js"
+    "faucet": "node utils/alchemy-faucet.js",
+    "deploy-game": "node contracts/deploy.js"
   },
   "dependencies": {
+    "@adraffy/ens-normalize": "^1.11.0",
     "@quicknode/sdk": "^2.4.0",
     "axios": "^1.7.9",
     "dotenv": "^16.4.1",
     "ethers": "^6.13.5",
+    "solc": "^0.8.0",
     "winston": "^3.11.0"
   }
 }

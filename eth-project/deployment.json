@@ -1,0 +1,9 @@
+{
+  "contractAddress": "0x9377e92D7Dc8976CD9B96Ff29D65dF8908a48d7d",
+  "deploymentHash": "0xc8f4b4b06ffaaea3a794bcce50e1a1ee1cea5291138086018592f24cf852a678",
+  "deployer": "0xc839a578b459E638C57beb70e3Eb9B38375AAB5A",
+  "timestamp": "2025-02-09T11:54:27.393Z",
+  "network": "sepolia",
+  "gasUsed": "473639",
+  "blockNumber": 7672247
+}

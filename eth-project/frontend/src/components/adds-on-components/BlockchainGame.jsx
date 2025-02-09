@@ -20,7 +20,7 @@ const BlockchainGame = () => {
   ];
 
   // Sepolia 測試網上的遊戲合約地址
-  const GAME_CONTRACT_ADDRESS = "YOUR_DEPLOYED_CONTRACT_ADDRESS";
+  const GAME_CONTRACT_ADDRESS = "0x9377e92D7Dc8976CD9B96Ff29D65dF8908a48d7d";
 
   // 連接錢包
   const connectWallet = async () => {

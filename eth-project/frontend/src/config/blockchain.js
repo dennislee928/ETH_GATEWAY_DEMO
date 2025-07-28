@@ -1,0 +1,88 @@
+// 區塊鏈配置檔案
+export const BLOCKCHAIN_CONFIG = {
+  // RPC 端點配置
+  RPC_ENDPOINTS: {
+    sepolia: [
+      "https://ethereum-sepolia.publicnode.com",
+      "https://rpc.sepolia.org",
+      "https://sepolia.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
+    ],
+    mainnet: [
+      "https://ethereum.publicnode.com",
+      "https://rpc.ankr.com/eth",
+      "https://cloudflare-eth.com",
+    ],
+  },
+
+  // 網路配置
+  NETWORKS: {
+    sepolia: {
+      chainId: 11155111,
+      name: "sepolia",
+      currency: "ETH",
+      explorer: "https://sepolia.etherscan.io",
+    },
+    mainnet: {
+      chainId: 1,
+      name: "mainnet",
+      currency: "ETH",
+      explorer: "https://etherscan.io",
+    },
+  },
+
+  // 預設網路
+  DEFAULT_NETWORK: "sepolia",
+
+  // 重試配置
+  RETRY_CONFIG: {
+    maxRetries: 3,
+    retryDelay: 1000,
+    timeout: 10000,
+  },
+};
+
+// 獲取可用的 RPC 端點
+export const getRpcEndpoint = (network = BLOCKCHAIN_CONFIG.DEFAULT_NETWORK) => {
+  const endpoints = BLOCKCHAIN_CONFIG.RPC_ENDPOINTS[network];
+  if (!endpoints || endpoints.length === 0) {
+    throw new Error(`未找到網路 ${network} 的 RPC 端點配置`);
+  }
+  return endpoints[0]; // 返回第一個端點
+};
+
+// 獲取網路配置
+export const getNetworkConfig = (
+  network = BLOCKCHAIN_CONFIG.DEFAULT_NETWORK
+) => {
+  const config = BLOCKCHAIN_CONFIG.NETWORKS[network];
+  if (!config) {
+    throw new Error(`未找到網路 ${network} 的配置`);
+  }
+  return config;
+};
+
+// 驗證以太坊地址
+export const validateAddress = (address) => {
+  if (!address) return false;
+
+  // 檢查基本格式
+  if (!/^0x[a-fA-F0-9]{40}$/.test(address)) {
+    return false;
+  }
+
+  return true;
+};
+
+// 格式化錯誤訊息
+export const formatErrorMessage = (error) => {
+  if (error.code === "UNCONFIGURED_NAME") {
+    return "無效的以太坊地址格式";
+  }
+  if (error.code === "NETWORK_ERROR") {
+    return "網路連接錯誤，請檢查網路連接";
+  }
+  if (error.code === "TIMEOUT") {
+    return "請求超時，請稍後重試";
+  }
+  return error.message || "未知錯誤";
+};

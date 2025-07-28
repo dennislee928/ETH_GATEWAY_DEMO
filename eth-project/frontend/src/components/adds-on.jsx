@@ -1,12 +1,17 @@
 import React, { useState, useMemo } from "react";
 import { ethers } from "ethers";
-
-import "../components/component-css/adds-on.css";
 import { useTranslation } from "react-i18next";
+import "./component-css/adds-on.css";
+import {
+  getRpcEndpoint,
+  getNetworkConfig,
+  validateAddress,
+  formatErrorMessage,
+} from "../config/blockchain";
 
 const AddsOn = () => {
   const { t } = useTranslation();
-  const [activeTab, setActiveTab] = useState("events");
+  const [activeTab, setActiveTab] = useState("transfers");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState({
@@ -19,14 +24,19 @@ const AddsOn = () => {
   const [address, setAddress] = useState("");
   const [txHash, setTxHash] = useState("");
 
-  const provider = useMemo(
-    () => new ethers.JsonRpcProvider("https://ethereum-sepolia.publicnode.com"),
-    []
-  );
+  const provider = useMemo(() => {
+    const gateway = getRpcEndpoint();
+    const networkConfig = getNetworkConfig();
+
+    return new ethers.JsonRpcProvider(gateway, {
+      chainId: networkConfig.chainId,
+      name: networkConfig.name,
+    });
+  }, []);
 
   // 1. 事件監聽和歷史記錄
   const watchTransfers = async (address) => {
-    if (!ethers.isAddress(address)) {
+    if (!validateAddress(address)) {
       setError(t("invalidAddress"));
       return;
     }
@@ -44,7 +54,7 @@ const AddsOn = () => {
         }));
       });
     } catch (error) {
-      setError(t("eventError"));
+      setError(formatErrorMessage(error));
     } finally {
       setLoading(false);
     }
@@ -64,7 +74,7 @@ const AddsOn = () => {
 
       setData((prev) => ({ ...prev, transfers: history }));
     } catch (error) {
-      setError(t("historyError"));
+      setError(formatErrorMessage(error));
     } finally {
       setLoading(false);
     }
@@ -87,7 +97,7 @@ const AddsOn = () => {
         },
       }));
     } catch (error) {
-      setError(t("contractError"));
+      setError(formatErrorMessage(error));
     } finally {
       setLoading(false);
     }
@@ -194,15 +204,15 @@ const AddsOn = () => {
 
   // 添加說明內容
   const instructions = {
-    events: {
-      title: t("eventInstructionsTitle"),
+    transfers: {
+      title: t("transferInstructionsTitle"),
       content: [
-        t("eventInstruction1"),
-        t("eventInstruction2"),
-        t("eventInstruction3"),
+        t("transferInstruction1"),
+        t("transferInstruction2"),
+        t("transferInstruction3"),
       ],
-      example: t("eventExample"),
-      tips: [t("eventTip1"), t("eventTip2"), t("eventTip3")],
+      example: t("transferExample"),
+      tips: [t("transferTip1"), t("transferTip2"), t("transferTip3")],
     },
     contracts: {
       title: t("contractInstructionsTitle"),
@@ -228,10 +238,10 @@ const AddsOn = () => {
     <div className="adds-on">
       <div className="tabs">
         <button
-          className={activeTab === "events" ? "active" : ""}
-          onClick={() => setActiveTab("events")}
+          className={activeTab === "transfers" ? "active" : ""}
+          onClick={() => setActiveTab("transfers")}
         >
-          {t("events")}
+          {t("transfers")}
         </button>
         <button
           className={activeTab === "contracts" ? "active" : ""}
@@ -254,7 +264,7 @@ const AddsOn = () => {
       </div>
 
       <div className="content">
-        {activeTab === "events" && (
+        {activeTab === "transfers" && (
           <div className="section">
             <h3>{t("transferEvents")}</h3>
             <input

@@ -1,19 +1,28 @@
 import { ethers } from "ethers";
+import {
+  getRpcEndpoint,
+  getNetworkConfig,
+  validateAddress,
+  formatErrorMessage,
+} from "../config/blockchain";
 
 const useBlockchain = () => {
   const initProvider = () => {
     try {
-      // 使用 Sepolia 測試網路
-      const gateway = "https://rpc2.sepolia.org";
+      // 使用集中化配置的 RPC 端點
+      const gateway = getRpcEndpoint();
+      const networkConfig = getNetworkConfig();
+
       console.log("使用的 Gateway:", gateway);
+      console.log("網路配置:", networkConfig);
 
       if (!gateway) {
         throw new Error("未設定 ETH_GATEWAY");
       }
 
       return new ethers.JsonRpcProvider(gateway, {
-        chainId: 11155111, // Sepolia 的 chainId
-        name: "sepolia",
+        chainId: networkConfig.chainId,
+        name: networkConfig.name,
       });
     } catch (error) {
       console.error("Provider 初始化失敗:", error);
@@ -38,11 +47,16 @@ const useBlockchain = () => {
   // 獲取餘額
   const getBalance = async (address) => {
     try {
+      // 使用集中化的地址驗證
+      if (!validateAddress(address)) {
+        throw new Error("無效的以太坊地址格式");
+      }
+
       const balance = await provider.getBalance(address);
       return ethers.formatEther(balance);
     } catch (error) {
       console.error("獲取餘額失敗:", error);
-      throw error;
+      throw new Error(formatErrorMessage(error));
     }
   };
 
@@ -52,7 +66,7 @@ const useBlockchain = () => {
       return await provider.getBlock("latest");
     } catch (error) {
       console.error("獲取最新區塊失敗:", error);
-      throw error;
+      throw new Error(formatErrorMessage(error));
     }
   };
 
@@ -66,7 +80,7 @@ const useBlockchain = () => {
       };
     } catch (error) {
       console.error("獲取網路資訊失敗:", error);
-      throw error;
+      throw new Error(formatErrorMessage(error));
     }
   };
 

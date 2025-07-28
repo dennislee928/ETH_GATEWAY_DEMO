@@ -2,6 +2,11 @@ import React, { useState, useEffect, useMemo } from "react";
 import { ethers } from "ethers";
 import { useTranslation } from "react-i18next";
 import "./component-css/advanced-features.css";
+import {
+  getRpcEndpoint,
+  getNetworkConfig,
+  formatErrorMessage,
+} from "../config/blockchain";
 
 const AdvancedFeatures = () => {
   const { t } = useTranslation();
@@ -17,10 +22,15 @@ const AdvancedFeatures = () => {
   });
 
   // 使用 useMemo 來避免每次渲染都重新創建 provider
-  const provider = useMemo(
-    () => new ethers.JsonRpcProvider("https://ethereum-sepolia.publicnode.com"),
-    []
-  );
+  const provider = useMemo(() => {
+    const gateway = getRpcEndpoint();
+    const networkConfig = getNetworkConfig();
+
+    return new ethers.JsonRpcProvider(gateway, {
+      chainId: networkConfig.chainId,
+      name: networkConfig.name,
+    });
+  }, []);
 
   // 1. 交易相關功能
   const getTransactionDetails = async (txHash) => {
@@ -29,7 +39,7 @@ const AdvancedFeatures = () => {
       const tx = await provider.getTransaction(txHash);
       setData((prev) => ({ ...prev, transactions: tx }));
     } catch (error) {
-      setError(t("txError"));
+      setError(formatErrorMessage(error));
     } finally {
       setLoading(false);
     }
@@ -42,7 +52,7 @@ const AdvancedFeatures = () => {
       const block = await provider.getBlock(blockNumber);
       setData((prev) => ({ ...prev, blockDetails: block }));
     } catch (error) {
-      setError(t("blockError"));
+      setError(formatErrorMessage(error));
     } finally {
       setLoading(false);
     }
@@ -60,7 +70,7 @@ const AdvancedFeatures = () => {
         tokenBalance: ethers.formatEther(balance),
       }));
     } catch (error) {
-      setError(t("contractError"));
+      setError(formatErrorMessage(error));
     } finally {
       setLoading(false);
     }
@@ -83,7 +93,7 @@ const AdvancedFeatures = () => {
         },
       }));
     } catch (error) {
-      setError(t("networkError"));
+      setError(formatErrorMessage(error));
     } finally {
       setLoading(false);
     }
@@ -96,7 +106,7 @@ const AdvancedFeatures = () => {
       const address = await provider.resolveName(ensName);
       setData((prev) => ({ ...prev, ensAddress: address }));
     } catch (error) {
-      setError(t("ensError"));
+      setError(formatErrorMessage(error));
     } finally {
       setLoading(false);
     }

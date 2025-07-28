@@ -2,6 +2,12 @@ import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import { useTranslation } from "react-i18next";
 import "./component-css/faucet.css";
+import {
+  getRpcEndpoint,
+  getNetworkConfig,
+  validateAddress,
+  formatErrorMessage,
+} from "../config/blockchain";
 
 const Faucet = () => {
   const { t } = useTranslation();
@@ -11,7 +17,7 @@ const Faucet = () => {
   const [dots, setDots] = useState("");
   const [error, setError] = useState(null);
 
-  // 監控餘額變化.
+  // 監控狀態動畫
   useEffect(() => {
     let dotsInterval;
     if (isMonitoring) {
@@ -26,17 +32,24 @@ const Faucet = () => {
   const checkBalance = async () => {
     try {
       setError(null);
-      const provider = new ethers.JsonRpcProvider(
-        process.env.REACT_APP_QUICKNODE_URL
-      );
-      if (!ethers.isAddress(address)) {
+
+      const gateway = getRpcEndpoint();
+      const networkConfig = getNetworkConfig();
+
+      const provider = new ethers.JsonRpcProvider(gateway, {
+        chainId: networkConfig.chainId,
+        name: networkConfig.name,
+      });
+
+      if (!validateAddress(address)) {
         throw new Error(t("invalidAddress"));
       }
+
       const bal = await provider.getBalance(address);
       setBalance(bal);
       setIsMonitoring(true);
     } catch (err) {
-      setError(err.message);
+      setError(formatErrorMessage(err));
     }
   };
 

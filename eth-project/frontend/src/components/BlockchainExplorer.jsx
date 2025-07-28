@@ -3,6 +3,7 @@ import useBlockchain from "../hooks/useBLockchain";
 import "../components/component-css/BlockchainExplorer.css";
 import { ethers } from "ethers";
 import { useTranslation } from "react-i18next";
+import { validateAddress, formatErrorMessage } from "../config/blockchain";
 
 const BlockchainExplorer = () => {
   const { t } = useTranslation();
@@ -20,9 +21,7 @@ const BlockchainExplorer = () => {
   const [error, setError] = useState(null);
 
   // 引入區塊鏈功能
-  const { getLatestBlock, getNetwork } = useBlockchain();
-
-  const QUICKNODE_HTTP_URL = "https://ethereum-holesky.publicnode.com";
+  const { getLatestBlock, getNetwork, provider } = useBlockchain();
 
   // 查詢錢包資訊
   const handleWalletSearch = async () => {
@@ -31,11 +30,16 @@ const BlockchainExplorer = () => {
       return;
     }
 
+    // 使用集中化的地址驗證
+    if (!validateAddress(address)) {
+      setError("無效的以太坊地址格式，請檢查地址是否正確");
+      return;
+    }
+
     setLoading(true);
     setError(null);
 
     try {
-      const provider = new ethers.JsonRpcProvider(QUICKNODE_HTTP_URL);
       const txCount = await provider.getTransactionCount(address);
       const balance = await provider.getBalance(address);
 
@@ -45,7 +49,7 @@ const BlockchainExplorer = () => {
       });
     } catch (error) {
       console.error("Error:", error);
-      setError("獲取錢包資訊時發生錯誤");
+      setError("獲取錢包資訊時發生錯誤: " + formatErrorMessage(error));
     } finally {
       setLoading(false);
     }
@@ -65,7 +69,7 @@ const BlockchainExplorer = () => {
           latestBlock,
         });
       } catch (error) {
-        setError("獲取區塊鏈資訊失敗");
+        setError("獲取區塊鏈資訊失敗: " + formatErrorMessage(error));
         console.error(error);
       }
     };

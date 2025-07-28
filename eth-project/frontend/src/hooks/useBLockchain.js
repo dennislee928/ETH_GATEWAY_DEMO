@@ -60,7 +60,7 @@ const useBlockchain = () => {
       const network = await provider.getNetwork();
       return {
         name: network.name,
-        chainId: network.chainId,
+        chainId: network.chainId.toString(), // 轉換 BigInt 為字符串
       };
     } catch (error) {
       console.error("❌ 獲取網路資訊失敗:", error);

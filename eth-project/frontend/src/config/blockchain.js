@@ -42,7 +42,11 @@ export const getRpcEndpoint = (network = BLOCKCHAIN_CONFIG.DEFAULT_NETWORK) => {
   if (!endpoints || endpoints.length === 0) {
     throw new Error(`未找到網路 ${network} 的 RPC 端點配置`);
   }
-  return endpoints[0]; // 返回第一個端點
+
+  // 強制使用第一個端點（支援 CORS 的端點）
+  const endpoint = endpoints[0];
+  console.log(`🔧 使用 RPC 端點: ${endpoint}`);
+  return endpoint;
 };
 
 // 獲取網路配置
@@ -97,5 +101,18 @@ export const retryOperation = async (operation, maxRetries = 3) => {
       if (i === maxRetries - 1) throw error;
       await new Promise((resolve) => setTimeout(resolve, 1000 * (i + 1)));
     }
+  }
+};
+
+// 清除快取並重新載入配置
+export const clearCacheAndReload = () => {
+  console.log("🧹 清除快取並重新載入配置...");
+  if (typeof window !== "undefined") {
+    // 清除 localStorage 中的任何快取
+    localStorage.removeItem("rpc_endpoint_cache");
+    localStorage.removeItem("network_config_cache");
+
+    // 強制重新載入頁面
+    window.location.reload();
   }
 };

@@ -8,6 +8,7 @@ import AddsOn from "./components/adds-on";
 import Faucet from "./components/Faucet";
 import "./App.css";
 import "./utils/testRpcEndpoints"; // 導入 RPC 測試工具
+import "./utils/emergencyFix"; // 導入緊急修復工具
 
 function App() {
   return (

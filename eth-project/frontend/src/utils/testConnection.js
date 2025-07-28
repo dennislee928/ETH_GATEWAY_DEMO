@@ -27,11 +27,9 @@ export const testRpcConnection = async () => {
       name: networkConfig.name,
     });
 
-    // 測試網路連接
     const network = await provider.getNetwork();
     console.log("連接的網路:", network);
 
-    // 測試獲取最新區塊
     const latestBlock = await provider.getBlock("latest");
     results.latestBlock = {
       number: latestBlock.number,
@@ -54,7 +52,6 @@ export const testRpcConnection = async () => {
 export const testMultipleEndpoints = async () => {
   const endpoints = [
     "https://ethereum-sepolia.publicnode.com",
-    "https://rpc.sepolia.org",
     "https://sepolia.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
   ];
 

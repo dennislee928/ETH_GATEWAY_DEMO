@@ -20,123 +20,10 @@ const getPreferredLanguage = () => {
 const resources = {
   en: {
     translation: {
-      // Advanced Features
-      transactionDetails: "Transaction Details",
-      blockDetails: "Block Details",
-      gasPrice: "Gas Price",
-      ensLookup: "ENS Lookup",
-      features: "Features",
-      enterBlockNumber: "Enter block number",
-      success: "Success",
-      failed: "Failed",
-
-      // Instructions
-      howToUse: "How to Use",
-      instructions: "Instructions",
-
-      // Transaction Instructions
-      transactionInstructionsTitle: "智能交易分析",
-      transactionInstruction1: "輸入交易哈希進行深度分析",
-      transactionInstruction2: "查看交易詳情、狀態和 Gas 消耗",
-
-      // Network Instructions
-      networkInstructionsTitle: "即時網路監控",
-      networkInstruction1: "實時檢查當前網路狀態和擁塞情況",
-      networkInstruction2: "查看最新區塊資訊和網路統計",
-
-      // Gas Instructions
-      gasInstructions: "Gas 費用優化指南",
-      gasInstruction1: "實時監控當前 Gas 價格趨勢",
-      gasInstruction2: "智能建議最佳 Gas 限制設置",
-
-      // Token Instructions
-      tokenInstructions: "代幣資產管理",
-      tokenInstruction1: "輸入代幣合約地址進行詳細分析",
-      tokenInstruction2: "查看代幣詳情、轉帳記錄和持有者資訊",
-
-      // ENS Instructions
-      ensInstructions: "ENS 域名解析",
-      ensInstruction1: "輸入 ENS 域名進行快速解析",
-      ensInstruction2: "獲取對應的 ETH 地址和反向解析",
-
-      // Tabs
-      events: "智能事件",
-      contracts: "合約分析",
-      network: "網路監控",
-      transactions: "交易追蹤",
-
-      // Event Related
-      transferEvents: "轉帳事件監控",
-      enterContractAddress: "輸入智能合約地址",
-      watchTransfers: "即時監聽轉帳",
-      getHistory: "獲取歷史記錄",
-
-      // Event Instructions
-      eventInstructionsTitle: "智能事件監控系統",
-      eventInstruction1: "輸入合約地址開始智能監控",
-      eventInstruction2: "即時監控轉帳和合約事件",
-      eventInstruction3: "查看完整的轉帳歷史和分析",
-      eventExample: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
-
-      // Tips
-      tips: "專業提示",
-      eventTip1: "監控大型合約時注意 Gas 消耗和網路擁塞",
-      eventTip2: "使用 WebSocket 連接以獲得更好的實時性能",
-      eventTip3: "使用智能過濾器只監聽您感興趣的特定事件",
-
-      // Examples
-      example: "實用範例",
-
-      // Contract Tips
-      contractTip1: "驗證智能合約原始碼確保安全性",
-      contractTip2: "檢查合約餘額和代幣持有情況",
-      contractTip3: "檢視合約互動歷史和調用記錄",
-
-      // Network Tips
-      networkTip1: "實時監控網路擁塞狀況和 Gas 價格",
-      networkTip2: "定期檢查網路狀態以選擇最佳交易時機",
-      networkTip3: "根據需求選擇適當的網路（主網/測試網）",
-
-      // Transaction Tips
-      txTip1: "仔細驗證交易詳情和接收地址",
-      txTip2: "根據網路狀況調整 Gas 設定",
-      txTip3: "實時監控交易狀態和確認數",
-
-      // Wallet connection translations
-      connecting: "Connecting...",
-      disconnect: "Disconnect",
-      checkMetamask: "Please check MetaMask popup",
-      metamaskRequired: "MetaMask required",
-      metamaskInstallMessage:
-        "Please install MetaMask extension to use this feature",
-      installMetamask: "Install MetaMask",
-      close: "Close",
-
-      guessNumber: "Guess the Number",
-      gameDescription:
-        "Guess a number between 1 and 10. Cost: 0.01 ETH(in Sepolia) per guess",
-      connectWallet: "Connect Wallet",
-      connectedAs: "Connected as",
-      enterNumberPlaceholder: "Enter a number (1-10)",
-      play: "Play",
-      playing: "Playing...",
-      waiting: "Waiting for confirmation...",
-      youWon: "Congratulations! You won!",
-      youLost: "Sorry, try again!",
-      gameError: "Game error occurred",
-      pleaseConnect: "Please connect your wallet first",
-      invalidNumber: "Please enter a number between 1 and 10",
-      noMetamask: "Please install MetaMask",
-      connectionError: "Connection error",
-      gameRules: "Game Rules",
-      gameRule1: "Choose a number between 1 and 10",
-      gameRule2: "Pay 0.01 ETH(in Sepolia) to play",
-      gameRule3: "Win double your bet if you guess correctly",
-
       // Navigation translations
       home: "Home",
       blockchainExplorer: "Blockchain Explorer",
-      advancedFeatures: "Advanced Tools",
+      game: "Blockchain Game",
       addsOn: "Developer Tools",
       faucet: "Testnet Faucet",
 
@@ -162,91 +49,150 @@ const resources = {
       aboutDescription:
         "ETH Gateway is a comprehensive Ethereum blockchain development platform built with React and Ethers.js technology stack. Whether you're a blockchain beginner or an experienced developer, you'll find the tools and resources you need here. Connect your MetaMask wallet and start exploring the unlimited possibilities of blockchain technology.",
       techStack: "Technology Architecture",
+
+      // Transfer event monitoring instructions
+      transferInstructionsTitle: "Smart Transfer Event Monitoring System",
+      transferInstruction1:
+        "Enter smart contract address to start real-time transfer event monitoring",
+      transferInstruction2:
+        "Use WebSocket connection to get real-time transfer notifications",
+      transferInstruction3:
+        "View complete transfer history and detailed analysis",
+      transferExample: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+      transferTip1:
+        "Monitor gas consumption and network congestion for large contracts",
+      transferTip2: "Use WebSocket connection for better real-time performance",
+      transferTip3:
+        "Use smart filters to only listen to specific transfer events you're interested in",
+
+      // Contract analysis instructions
+      contractInstructionsTitle: "Smart Contract Deep Analysis Tool",
+      contractInstruction1:
+        "Enter contract address for comprehensive smart contract analysis",
+      contractInstruction2:
+        "Get contract code, token information and interaction history",
+      contractExample: "0xA0b86a33E6441b8C4C8C8C8C8C8C8C8C8C8C8C8C",
+      contractTip1:
+        "Verify smart contract source code for security and reliability",
+      contractTip2:
+        "Check contract balance and token holdings to assess activity",
+      contractTip3:
+        "Review contract interaction history and call logs to understand usage patterns",
+
+      // Network status monitoring instructions
+      networkInstructionsTitle: "Real-time Network Status Monitoring System",
+      networkInstruction1:
+        "Real-time check of current network status, congestion and gas price trends",
+      networkInstruction2:
+        "View latest block information, network statistics and performance metrics",
+      networkExample:
+        "Current block height, gas price, network congestion level",
+      networkTip1:
+        "Monitor network congestion and gas prices to choose optimal transaction timing",
+      networkTip2:
+        "Regularly check network status to optimize transaction costs and confirmation speed",
+      networkTip3:
+        "Choose appropriate network (mainnet/testnet) based on your needs",
+
+      // Transaction parsing instructions
+      transactionInstructionsTitle: "Smart Transaction Parsing and Analysis",
+      transactionInstruction1:
+        "Enter transaction hash for deep parsing and detailed analysis",
+      transactionInstruction2:
+        "View transaction details, status, gas consumption and confirmation info",
+      transactionExample:
+        "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+      transactionTip1:
+        "Carefully verify transaction details and recipient address for security",
+      transactionTip2:
+        "Adjust gas settings based on network conditions to optimize transaction costs",
+      transactionTip3:
+        "Monitor transaction status and confirmations in real-time to track progress",
+
+      // General function descriptions
+      transfers: "Transfer Monitoring",
+      contracts: "Contract Analysis",
+      network: "Network Monitoring",
+      transactions: "Transaction Parsing",
+      transferEvents: "Transfer Event Monitoring",
+      contractInfo: "Contract Information Analysis",
+      networkStats: "Network Statistics",
+      transactionDetails: "Transaction Details",
+      enterContractAddress: "Enter Smart Contract Address",
+      enterAddress: "Enter Ethereum Address",
+      enterTxHash: "Enter Transaction Hash",
+      watchTransfers: "Watch Transfers in Real-time",
+      getHistory: "Get History",
+      getContractInfo: "Get Contract Info",
+      refreshStats: "Refresh Statistics",
+      checkAddress: "Check Address Type",
+      parseTransaction: "Parse Transaction",
+      instructions: "Instructions",
+      example: "Example",
+      tips: "Professional Tips",
+
+      // Blockchain Explorer translations
+      networkInfo: "Network Information",
+      networkName: "Network Name",
+      chainId: "Chain ID",
+      latestBlock: "Latest Block",
+      blockHeight: "Block Height",
+      timestamp: "Timestamp",
+      walletSearch: "Wallet Search",
+      enterEthAddress: "Enter Ethereum Address",
+      exampleAddress: "Example Address",
+      searching: "Searching...",
+      search: "Search",
+      walletInfo: "Wallet Information",
+      balance: "Balance",
+      txCount: "Transaction Count",
+
+      // Error messages
+      networkError: "Network connection error, please check network settings",
+      addressError: "Address format error or network connection issue",
+      parseError:
+        "Transaction parsing failed, please check transaction hash format",
+      success: "Operation successful",
+      failed: "Operation failed",
+
+      // Wallet connection translations
+      connecting: "Connecting wallet...",
+      disconnect: "Disconnect Wallet",
+      checkMetamask: "Please check MetaMask popup and confirm connection",
+      metamaskRequired: "MetaMask Wallet Required",
+      metamaskInstallMessage:
+        "Please install MetaMask browser extension to use blockchain features",
+      installMetamask: "Install MetaMask",
+      close: "Close",
+
+      guessNumber: "Blockchain Number Guessing Game",
+      gameDescription:
+        "Guess a number between 1-10, cost: 0.01 ETH (Sepolia testnet) per guess",
+      connectWallet: "Connect Wallet",
+      connectedAs: "Connected as",
+      enterNumberPlaceholder: "Enter a number (1-10)",
+      play: "Play Game",
+      playing: "Playing...",
+      waiting: "Waiting for confirmation...",
+      youWon: "Congratulations! You won!",
+      youLost: "Sorry, try again!",
+      gameError: "Game error occurred",
+      pleaseConnect: "Please connect your wallet first",
+      invalidNumber: "Please enter a number between 1 and 10",
+      noMetamask: "Please install MetaMask",
+      connectionError: "Connection error",
+      gameRules: "Game Rules",
+      gameRule1: "Choose a number between 1 and 10",
+      gameRule2: "Pay 0.01 ETH (Sepolia testnet) to play",
+      gameRule3: "Win double your bet if you guess correctly",
     },
   },
   zh: {
     translation: {
-      // 繁體中文翻譯
-      transactionDetails: "交易詳情",
-      blockDetails: "區塊詳情",
-      gasPrice: "Gas 價格",
-      ensLookup: "ENS 查詢",
-      features: "功能",
-      enterBlockNumber: "輸入區塊號碼",
-      success: "成功",
-      failed: "失敗",
-
-      // 說明
-      howToUse: "使用說明",
-      instructions: "操作指南",
-
-      // 交易說明
-      transactionInstructionsTitle: "智能交易分析",
-      transactionInstruction1: "輸入交易哈希進行深度分析",
-      transactionInstruction2: "查看交易詳情、狀態和 Gas 消耗",
-
-      // 網路說明
-      networkInstructionsTitle: "即時網路監控",
-      networkInstruction1: "實時檢查當前網路狀態和擁塞情況",
-      networkInstruction2: "查看最新區塊資訊和網路統計",
-
-      // Gas 說明
-      gasInstructions: "Gas 費用優化指南",
-      gasInstruction1: "實時監控當前 Gas 價格趨勢",
-      gasInstruction2: "智能建議最佳 Gas 限制設置",
-
-      // 代幣說明
-      tokenInstructions: "代幣資產管理",
-      tokenInstruction1: "輸入代幣合約地址進行詳細分析",
-      tokenInstruction2: "查看代幣詳情、轉帳記錄和持有者資訊",
-
-      // ENS 說明
-      ensInstructions: "ENS 域名解析",
-      ensInstruction1: "輸入 ENS 域名進行快速解析",
-      ensInstruction2: "獲取對應的 ETH 地址和反向解析",
-
-      // 分頁
-      events: "智能事件",
-      contracts: "合約分析",
-      network: "網路監控",
-      transactions: "交易追蹤",
-
-      // 事件相關
-      transferEvents: "轉帳事件監控",
-      enterContractAddress: "輸入智能合約地址",
-      watchTransfers: "即時監聽轉帳",
-      getHistory: "獲取歷史記錄",
-
-      // 事件說明
-      eventInstructionsTitle: "智能事件監控系統",
-      eventInstruction1: "輸入合約地址開始智能監控",
-      eventInstruction2: "即時監控轉帳和合約事件",
-      eventInstruction3: "查看完整的轉帳歷史和分析",
-      eventExample: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
-
-      // 提示
-      tips: "專業提示",
-      eventTip1: "監控大型合約時注意 Gas 消耗和網路擁塞",
-      eventTip2: "使用 WebSocket 連接以獲得更好的實時性能",
-      eventTip3: "使用智能過濾器只監聽您感興趣的特定事件",
-
-      // 範例
-      example: "實用範例",
-
-      // 合約提示
-      contractTip1: "驗證智能合約原始碼確保安全性",
-      contractTip2: "檢查合約餘額和代幣持有情況",
-      contractTip3: "檢視合約互動歷史和調用記錄",
-
-      // 網路提示
-      networkTip1: "實時監控網路擁塞狀況和 Gas 價格",
-      networkTip2: "定期檢查網路狀態以選擇最佳交易時機",
-      networkTip3: "根據需求選擇適當的網路（主網/測試網）",
-
       // Navigation translations
       home: "首頁",
       blockchainExplorer: "區塊鏈瀏覽器",
-      advancedFeatures: "進階功能",
+      game: "區塊鏈遊戲",
       addsOn: "附加工具",
       faucet: "測試幣水龍頭",
 
@@ -272,12 +218,90 @@ const resources = {
         "ETH Gateway 是一個功能完整的以太坊區塊鏈開發平台，整合了 React 和 Ethers.js 技術棧。無論您是區塊鏈新手還是資深開發者，都能在這裡找到所需的工具和資源。連接您的 MetaMask 錢包，開始探索區塊鏈的無限可能。",
       techStack: "技術架構",
 
-      // 交易提示
-      txTip1: "仔細驗證交易詳情和接收地址",
-      txTip2: "根據網路狀況調整 Gas 設定",
-      txTip3: "實時監控交易狀態和確認數",
+      // Transfer event monitoring instructions
+      transferInstructionsTitle: "智能轉帳事件監控系統",
+      transferInstruction1: "輸入智能合約地址開始即時監控轉帳事件",
+      transferInstruction2: "使用 WebSocket 連接獲取實時轉帳通知",
+      transferInstruction3: "查看完整的轉帳歷史記錄和詳細分析",
+      transferExample: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+      transferTip1: "監控大型合約時注意 Gas 消耗和網路擁塞狀況",
+      transferTip2: "使用 WebSocket 連接以獲得更好的實時性能表現",
+      transferTip3: "使用智能過濾器只監聽您感興趣的特定轉帳事件",
 
-      // 錢包連接翻譯
+      // Contract analysis instructions
+      contractInstructionsTitle: "智能合約深度分析工具",
+      contractInstruction1: "輸入合約地址進行全面的智能合約分析",
+      contractInstruction2: "獲取合約代碼、代幣資訊和互動歷史記錄",
+      contractExample: "0xA0b86a33E6441b8C4C8C8C8C8C8C8C8C8C8C8C8C",
+      contractTip1: "驗證智能合約原始碼確保安全性和可靠性",
+      contractTip2: "檢查合約餘額和代幣持有情況以評估活躍度",
+      contractTip3: "檢視合約互動歷史和調用記錄了解使用模式",
+
+      // Network status monitoring instructions
+      networkInstructionsTitle: "即時網路狀態監控系統",
+      networkInstruction1: "實時檢查當前網路狀態、擁塞情況和 Gas 價格趨勢",
+      networkInstruction2: "查看最新區塊資訊、網路統計和性能指標",
+      networkExample: "當前區塊高度、Gas 價格、網路擁塞度",
+      networkTip1: "實時監控網路擁塞狀況和 Gas 價格以選擇最佳交易時機",
+      networkTip2: "定期檢查網路狀態以優化交易成本和確認速度",
+      networkTip3: "根據需求選擇適當的網路（主網/測試網）進行操作",
+
+      // Transaction parsing instructions
+      transactionInstructionsTitle: "智能交易解析與分析",
+      transactionInstruction1: "輸入交易哈希進行深度解析和詳細分析",
+      transactionInstruction2: "查看交易詳情、狀態、Gas 消耗和確認資訊",
+      transactionExample:
+        "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+      transactionTip1: "仔細驗證交易詳情和接收地址確保安全性",
+      transactionTip2: "根據網路狀況調整 Gas 設定以優化交易成本",
+      transactionTip3: "實時監控交易狀態和確認數以追蹤進度",
+
+      // General function descriptions
+      transfers: "轉帳監控",
+      contracts: "合約分析",
+      network: "網路監控",
+      transactions: "交易解析",
+      transferEvents: "轉帳事件監控",
+      contractInfo: "合約資訊分析",
+      networkStats: "網路統計數據",
+      transactionDetails: "交易詳細資訊",
+      enterContractAddress: "輸入智能合約地址",
+      enterAddress: "輸入以太坊地址",
+      enterTxHash: "輸入交易哈希",
+      watchTransfers: "即時監聽轉帳",
+      getHistory: "獲取歷史記錄",
+      getContractInfo: "獲取合約資訊",
+      refreshStats: "刷新統計數據",
+      checkAddress: "檢查地址類型",
+      parseTransaction: "解析交易詳情",
+      instructions: "使用說明",
+      example: "實用範例",
+      tips: "專業提示",
+
+      // Blockchain Explorer translations
+      networkInfo: "網路資訊",
+      networkName: "網路名稱",
+      chainId: "鏈 ID",
+      latestBlock: "最新區塊",
+      blockHeight: "區塊高度",
+      timestamp: "時間戳記",
+      walletSearch: "錢包搜尋",
+      enterEthAddress: "請輸入以太坊地址",
+      exampleAddress: "範例地址",
+      searching: "搜尋中...",
+      search: "搜尋",
+      walletInfo: "錢包資訊",
+      balance: "餘額",
+      txCount: "交易數量",
+
+      // Error messages
+      networkError: "網路連接錯誤，請檢查網路設定",
+      addressError: "地址格式錯誤或網路連接問題",
+      parseError: "交易解析失敗，請檢查交易哈希格式",
+      success: "操作成功",
+      failed: "操作失敗",
+
+      // Wallet connection translations
       connecting: "正在連接錢包...",
       disconnect: "斷開錢包連接",
       checkMetamask: "請檢查 MetaMask 彈窗並確認連接",

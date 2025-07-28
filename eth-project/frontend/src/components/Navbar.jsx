@@ -25,8 +25,8 @@ const Navbar = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/advanced" className="nav-link">
-              {t("advancedFeatures")}
+            <Link to="/game" className="nav-link">
+              {t("game")}
             </Link>
           </li>
           <li className="nav-item">

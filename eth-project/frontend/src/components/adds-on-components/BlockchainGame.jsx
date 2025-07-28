@@ -12,13 +12,7 @@ const BlockchainGame = () => {
   const [loading, setLoading] = useState(false);
 
   // 使用集中化的錢包 hook
-  const {
-    account,
-    isConnected,
-    signer,
-    chainId,
-    error: walletError,
-  } = useWallet();
+  const { isConnected, signer, chainId, error: walletError } = useWallet();
 
   // 猜數字遊戲合約 ABI
   const gameABI = [

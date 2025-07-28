@@ -11,6 +11,7 @@ import "./App.css";
 import "./utils/testRpcEndpoints"; // 導入 RPC 測試工具
 import "./utils/emergencyFix"; // 導入緊急修復工具
 import "./utils/forceReload"; // 導入強制重新載入工具
+import BlockchainGame from "./components/adds-on-components/BlockchainGame";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/advanced" element={<AdvancedFeatures />} />
           <Route path="/adds-on" element={<AddsOn />} />
           <Route path="/faucet" element={<Faucet />} />
+          <Route path="/game" element={<BlockchainGame />} />
         </Routes>
       </div>
     </Router>

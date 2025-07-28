@@ -112,10 +112,10 @@ const useWallet = () => {
         if (error.code === 4902) {
           // 網路不存在，嘗試添加
           try {
-            const networkConfig =
-              targetChainId === 11155111
-                ? getNetworkConfig("sepolia")
-                : getNetworkConfig("mainnet");
+            // const networkConfig =
+            //   targetChainId === 11155111
+            //     ? getNetworkConfig("sepolia")
+            //     : getNetworkConfig("mainnet");
 
             const rpcUrl =
               targetChainId === 11155111

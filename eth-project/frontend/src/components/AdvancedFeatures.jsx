@@ -59,22 +59,22 @@ const AdvancedFeatures = () => {
   };
 
   // 3. 智能合約互動
-  const getTokenBalance = async (tokenAddress, walletAddress) => {
-    setLoading(true);
-    try {
-      const erc20Abi = ["function balanceOf(address) view returns (uint256)"];
-      const contract = new ethers.Contract(tokenAddress, erc20Abi, provider);
-      const balance = await contract.balanceOf(walletAddress);
-      setData((prev) => ({
-        ...prev,
-        tokenBalance: ethers.formatEther(balance),
-      }));
-    } catch (error) {
-      setError(formatErrorMessage(error));
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const getTokenBalance = async (tokenAddress, walletAddress) => {
+  //   setLoading(true);
+  //   try {
+  //     const erc20Abi = ["function balanceOf(address) view returns (uint256)"];
+  //     const contract = new ethers.Contract(tokenAddress, erc20Abi, provider);
+  //     const balance = await contract.balanceOf(walletAddress);
+  //     setData((prev) => ({
+  //       ...prev,
+  //       tokenBalance: ethers.formatEther(balance),
+  //     }));
+  //   } catch (error) {
+  //     setError(formatErrorMessage(error));
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
   // 4. Gas 相關功能
   const getGasPrice = async () => {

@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/navbar.css";
 import { useTranslation } from "react-i18next";
-import WalletConnect from "./WalletConnect";
 
 const Navbar = () => {
   const { t } = useTranslation();

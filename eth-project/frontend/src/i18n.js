@@ -117,6 +117,26 @@ const resources = {
       gameRule1: "Choose a number between 1 and 10",
       gameRule2: "Pay 0.01 ETH(in Sepolia) to play",
       gameRule3: "Win double your bet if you guess correctly",
+
+      // Home page translations
+      welcomeTitle: "Welcome to ETH Gateway Demo",
+      welcomeSubtitle:
+        "Explore the Ethereum blockchain with our comprehensive tools and features",
+      blockchainExplorer: "Blockchain Explorer",
+      blockchainExplorerDesc:
+        "Search transactions, blocks, and addresses on the Ethereum network",
+      advancedFeatures: "Advanced Features",
+      advancedFeaturesDesc:
+        "Monitor events, analyze contracts, and track network status",
+      blockchainGame: "Blockchain Game",
+      blockchainGameDesc:
+        "Play our interactive guessing game on the blockchain",
+      faucet: "Testnet Faucet",
+      faucetDesc: "Get test ETH for development and testing purposes",
+      aboutTitle: "About This Project",
+      aboutDescription:
+        "A comprehensive Ethereum blockchain explorer and development toolkit built with React and Ethers.js. Connect your MetaMask wallet to interact with smart contracts and explore the blockchain.",
+      techStack: "Technology Stack",
     },
   },
   zh: {
@@ -197,6 +217,22 @@ const resources = {
       networkTip1: "監控網路擁塞狀況",
       networkTip2: "定期檢查 gas 價格",
       networkTip3: "使用適當的網路",
+
+      // Home page translations
+      welcomeTitle: "歡迎使用 ETH Gateway Demo",
+      welcomeSubtitle: "使用我們的綜合工具和功能探索以太坊區塊鏈",
+      blockchainExplorer: "區塊鏈瀏覽器",
+      blockchainExplorerDesc: "在以太坊網路上搜尋交易、區塊和地址",
+      advancedFeatures: "進階功能",
+      advancedFeaturesDesc: "監控事件、分析合約並追蹤網路狀態",
+      blockchainGame: "區塊鏈遊戲",
+      blockchainGameDesc: "在區塊鏈上玩我們的互動猜數字遊戲",
+      faucet: "測試網水龍頭",
+      faucetDesc: "獲取測試用 ETH 進行開發和測試",
+      aboutTitle: "關於此專案",
+      aboutDescription:
+        "一個使用 React 和 Ethers.js 構建的綜合以太坊區塊鏈瀏覽器和開發工具包。連接您的 MetaMask 錢包以與智能合約互動並探索區塊鏈。",
+      techStack: "技術棧",
 
       // 交易提示
       txTip1: "驗證交易詳情",

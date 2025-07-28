@@ -45,9 +45,6 @@ const Navbar = () => {
             </Link>
           </li>
         </ul>
-        <div className="wallet-section">
-          <WalletConnect showNetworkSwitch={false} />
-        </div>
       </div>
     </nav>
   );

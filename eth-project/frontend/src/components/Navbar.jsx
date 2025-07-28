@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/navbar.css";
 import { useTranslation } from "react-i18next";
+import LanguageSelector from "./LanguageSelector";
 
 const Navbar = () => {
   const { t } = useTranslation();
@@ -39,6 +40,9 @@ const Navbar = () => {
             </Link>
           </li>
         </ul>
+        <div className="nav-right">
+          <LanguageSelector />
+        </div>
       </div>
     </nav>
   );

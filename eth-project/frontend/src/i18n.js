@@ -1,6 +1,21 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import LanguageDetector from "i18next-browser-languagedetector";
+
+// 獲取用戶偏好的語言
+const getPreferredLanguage = () => {
+  const savedLanguage = localStorage.getItem("preferredLanguage");
+  if (savedLanguage) {
+    return savedLanguage;
+  }
+
+  // 檢查瀏覽器語言
+  const browserLanguage = navigator.language || navigator.userLanguage;
+  if (browserLanguage.startsWith("zh")) {
+    return "zh";
+  }
+
+  return "en";
+};
 
 const resources = {
   en: {
@@ -295,29 +310,14 @@ const resources = {
   },
 };
 
-i18n
-  .use(LanguageDetector) // 添加語言檢測
-  .use(initReactI18next)
-  .init({
-    resources,
-    fallbackLng: "en",
-    detection: {
-      order: ["navigator", "htmlTag", "path", "subdomain"],
-      lookupFromPathIndex: 0,
-      // 台灣地區使用繁體中文
-      checkWhitelist: true,
-      whitelist: ["en", "zh"],
-      // 將台灣地區對應到繁體中文
-      convertLanguageCodes: [
-        {
-          from: "zh-TW",
-          to: "zh",
-        },
-      ],
-    },
-    interpolation: {
-      escapeValue: false,
-    },
-  });
+i18n.use(initReactI18next).init({
+  resources,
+  lng: getPreferredLanguage(),
+  fallbackLng: "en",
+  debug: false,
+  interpolation: {
+    escapeValue: false,
+  },
+});
 
 export default i18n;

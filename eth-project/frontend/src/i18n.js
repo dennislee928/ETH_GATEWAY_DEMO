@@ -87,6 +87,16 @@ const resources = {
       txTip2: "Check gas settings",
       txTip3: "Monitor transaction status",
 
+      // Wallet connection translations
+      connecting: "Connecting...",
+      disconnect: "Disconnect",
+      checkMetamask: "Please check MetaMask popup",
+      metamaskRequired: "MetaMask required",
+      metamaskInstallMessage:
+        "Please install MetaMask extension to use this feature",
+      installMetamask: "Install MetaMask",
+      close: "Close",
+
       guessNumber: "Guess the Number",
       gameDescription:
         "Guess a number between 1 and 10. Cost: 0.01 ETH(in Sepolia) per guess",
@@ -192,6 +202,15 @@ const resources = {
       txTip1: "驗證交易詳情",
       txTip2: "檢查 gas 設定",
       txTip3: "監控交易狀態",
+
+      // 錢包連接翻譯
+      connecting: "連接中...",
+      disconnect: "斷開連接",
+      checkMetamask: "請檢查 MetaMask 彈窗",
+      metamaskRequired: "需要 MetaMask",
+      metamaskInstallMessage: "請安裝 MetaMask 擴展以使用此功能",
+      installMetamask: "安裝 MetaMask",
+      close: "關閉",
 
       guessNumber: "Guess the Number",
       gameDescription:

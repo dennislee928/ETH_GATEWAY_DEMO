@@ -1,61 +1,116 @@
 .navbar {
-  background-color: #1a1a1a;
-  padding: 1rem 2rem;
+  background: #2c3e50;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 999;
 }
 
 .nav-container {
-  max-width: 1200px;
-  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 2rem;
 }
 
 .nav-logo {
   color: #fff;
+  justify-self: start;
+  cursor: pointer;
   text-decoration: none;
-  font-size: 1.5rem;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
   font-weight: bold;
 }
 
 .nav-menu {
   display: flex;
+  align-items: center;
   list-style: none;
+  text-align: center;
   margin: 0;
   padding: 0;
 }
 
 .nav-item {
-  margin-left: 2rem;
+  height: 80px;
+  display: flex;
+  align-items: center;
 }
 
 .nav-link {
   color: #fff;
+  display: flex;
+  align-items: center;
   text-decoration: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  transition: background-color 0.3s;
+  padding: 0 1rem;
+  height: 100%;
+  transition: all 0.3s ease;
 }
 
 .nav-link:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  color: #3498db;
+  transition: all 0.3s ease;
 }
 
+.wallet-section {
+  display: flex;
+  align-items: center;
+}
+
+/* Responsive design */
 @media (max-width: 768px) {
   .nav-container {
-    flex-direction: column;
-    gap: 1rem;
+    padding: 0 1rem;
   }
 
   .nav-menu {
-    width: 100%;
-    justify-content: center;
+    display: none;
   }
 
-  .nav-item {
-    margin: 0 1rem;
+  .wallet-section {
+    margin-left: auto;
+  }
+
+  .wallet-section .wallet-connect {
+    padding: 0.5rem;
+    min-width: auto;
+  }
+
+  .wallet-section .connect-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    min-width: 120px;
+  }
+
+  .wallet-section .connected-section {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .wallet-section .account-info {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.25rem;
+  }
+
+  .wallet-section .account-address {
+    font-size: 0.75rem;
+  }
+
+  .wallet-section .network-badge {
+    font-size: 0.625rem;
+    padding: 0.125rem 0.25rem;
+  }
+
+  .wallet-section .disconnect-button {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
   }
 }

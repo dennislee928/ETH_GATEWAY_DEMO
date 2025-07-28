@@ -1,10 +1,10 @@
 // 區塊鏈配置檔案
 export const BLOCKCHAIN_CONFIG = {
-  // RPC 端點配置
+  // RPC 端點配置 - 按可靠性排序
   RPC_ENDPOINTS: {
     sepolia: [
-      "https://ethereum-sepolia.publicnode.com",
       "https://rpc.sepolia.org",
+      "https://ethereum-sepolia.publicnode.com",
       "https://sepolia.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
     ],
     mainnet: [
@@ -84,5 +84,23 @@ export const formatErrorMessage = (error) => {
   if (error.code === "TIMEOUT") {
     return "請求超時，請稍後重試";
   }
+  if (error.code === "CORS_ERROR") {
+    return "跨域請求被阻止，請檢查網路設置";
+  }
+  if (error.message.includes("fetch")) {
+    return "網路請求失敗，請檢查網路連接";
+  }
   return error.message || "未知錯誤";
+};
+
+// 重試機制
+export const retryOperation = async (operation, maxRetries = 3) => {
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      return await operation();
+    } catch (error) {
+      if (i === maxRetries - 1) throw error;
+      await new Promise((resolve) => setTimeout(resolve, 1000 * (i + 1)));
+    }
+  }
 };

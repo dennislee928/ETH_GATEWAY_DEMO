@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { ethers } from "ethers";
 import { useTranslation } from "react-i18next";
 import "./component-css/TokenSwapCalculator.css";
-
-const API_URL = "https://api.1inch.dev/v5.0/1";
-const API_KEY = "YOUR_API_KEY"; // 需要從 1inch 開發者門戶獲取 API key
 
 const TokenSwapCalculator = () => {
   const { t } = useTranslation();
@@ -21,34 +18,54 @@ const TokenSwapCalculator = () => {
     USDC: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
   };
 
-  const calculateSwap = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch(
-        `${API_URL}/quote?` +
-          `fromTokenAddress=${tokens[fromToken]}&` +
-          `toTokenAddress=${tokens[toToken]}&` +
-          `amount=${ethers.parseEther(amount)}`,
-        {
-          headers: {
-            Authorization: `Bearer ${API_KEY}`,
-            Accept: "application/json",
-          },
-        }
-      );
+  // Mock exchange rates (in a real app, these would come from an API)
+  const mockRates = {
+    "ETH-USDT": 1800, // 1 ETH = 1800 USDT
+    "ETH-USDC": 1800, // 1 ETH = 1800 USDC
+    "USDT-ETH": 1 / 1800, // 1 USDT = 1/1800 ETH
+    "USDT-USDC": 1, // 1 USDT = 1 USDC
+    "USDC-ETH": 1 / 1800, // 1 USDC = 1/1800 ETH
+    "USDC-USDT": 1, // 1 USDC = 1 USDT
+  };
 
-      const data = await response.json();
-      setEstimate(ethers.formatEther(data.toTokenAmount));
-    } catch (err) {
-      console.error(err);
-      setError(t("swapError"));
+  const calculateSwap = async () => {
+    if (!amount || parseFloat(amount) <= 0) {
+      setError("請輸入有效金額");
+      return;
     }
-    setLoading(false);
+
+    setLoading(true);
+    setError(null);
+    setEstimate(null);
+
+    try {
+      // Simulate API delay
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      const rateKey = `${fromToken}-${toToken}`;
+      const rate = mockRates[rateKey];
+
+      if (!rate) {
+        throw new Error("不支援此代幣對");
+      }
+
+      const estimatedAmount = parseFloat(amount) * rate;
+      setEstimate(estimatedAmount.toFixed(6));
+    } catch (err) {
+      console.error("計算錯誤:", err);
+      setError("計算失敗: " + err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="token-swap-calculator">
       <h3>{t("swapCalculator")}</h3>
+      <p className="swap-description">
+        這是一個模擬的代幣兌換計算器。在實際應用中，會使用實時匯率 API。
+      </p>
+
       <div className="swap-form">
         <div className="input-group">
           <input
@@ -56,6 +73,8 @@ const TokenSwapCalculator = () => {
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             placeholder={t("enterAmount")}
+            min="0"
+            step="0.000001"
           />
           <select
             value={fromToken}
@@ -78,16 +97,42 @@ const TokenSwapCalculator = () => {
             ))}
           </select>
         </div>
-        <button onClick={calculateSwap} disabled={loading}>
+        <button
+          onClick={calculateSwap}
+          disabled={loading || !amount || parseFloat(amount) <= 0}
+          className="calculate-button"
+        >
           {loading ? t("calculating") : t("calculate")}
         </button>
       </div>
+
       {estimate && (
         <div className="estimate">
-          {t("estimatedOutput")}: {estimate} {toToken}
+          <h4>{t("estimatedOutput")}</h4>
+          <div className="estimate-amount">
+            {estimate} {toToken}
+          </div>
+          <div className="rate-info">
+            匯率: 1 {fromToken} = {mockRates[`${fromToken}-${toToken}`]}{" "}
+            {toToken}
+          </div>
         </div>
       )}
-      {error && <div className="error">{error}</div>}
+
+      {error && (
+        <div className="error">
+          <span>⚠️ {error}</span>
+        </div>
+      )}
+
+      <div className="swap-info">
+        <h4>支援的代幣對</h4>
+        <ul>
+          <li>ETH ↔ USDT (1 ETH = 1800 USDT)</li>
+          <li>ETH ↔ USDC (1 ETH = 1800 USDC)</li>
+          <li>USDT ↔ USDC (1:1 匯率)</li>
+        </ul>
+      </div>
     </div>
   );
 };

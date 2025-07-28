@@ -13,55 +13,13 @@
   line-height: 1.6;
 }
 
-.connect-button {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  padding: 1rem 2rem;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  width: 100%;
-  margin-bottom: 1rem;
-}
-
-.connect-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-}
-
-.connected-info {
-  background: #f8f9fa;
+/* WalletConnect 組件容器 */
+.wallet-section {
+  margin-bottom: 2rem;
   padding: 1rem;
+  background: #f8f9fa;
   border-radius: 8px;
-  margin-bottom: 1rem;
   border: 1px solid #e9ecef;
-}
-
-.connected-info > div {
-  margin-bottom: 0.5rem;
-}
-
-.network-info {
-  color: #6c757d;
-  font-size: 0.9rem;
-}
-
-.switch-network-button {
-  background: #ffc107;
-  color: #212529;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.875rem;
-  transition: background-color 0.2s ease;
-}
-
-.switch-network-button:hover {
-  background: #e0a800;
 }
 
 .error-message {

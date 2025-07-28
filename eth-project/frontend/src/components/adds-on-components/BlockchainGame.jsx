@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ethers } from "ethers";
 import { useTranslation } from "react-i18next";
 import useWallet from "../../hooks/useWallet";
+import WalletConnect from "../WalletConnect";
 import "./component-css/BlockchainGame.css";
 
 const BlockchainGame = () => {
@@ -17,8 +18,6 @@ const BlockchainGame = () => {
     signer,
     chainId,
     error: walletError,
-    connectWallet,
-    switchNetwork,
   } = useWallet();
 
   // 猜數字遊戲合約 ABI
@@ -30,16 +29,6 @@ const BlockchainGame = () => {
 
   // Sepolia 測試網上的遊戲合約地址
   const GAME_CONTRACT_ADDRESS = "0x9377e92D7Dc8976CD9B96Ff29D65dF8908a48d7d";
-
-  // 連接錢包
-  const handleConnectWallet = async () => {
-    await connectWallet();
-  };
-
-  // 切換到 Sepolia 網路
-  const handleSwitchToSepolia = async () => {
-    await switchNetwork(11155111);
-  };
 
   // 玩遊戲
   const playGame = async () => {
@@ -106,31 +95,13 @@ const BlockchainGame = () => {
       <h3>{t("guessNumber")}</h3>
       <p className="game-description">{t("gameDescription")}</p>
 
-      {/* 錢包連接狀態 */}
-      {walletError && <div className="error-message">{walletError}</div>}
+      {/* 使用 WalletConnect 組件 */}
+      <div className="wallet-section">
+        <WalletConnect showNetworkSwitch={true} />
+      </div>
 
-      {!isConnected ? (
-        <button onClick={handleConnectWallet} className="connect-button">
-          {t("connectWallet")}
-        </button>
-      ) : (
-        <div className="connected-info">
-          <div>
-            {t("connectedAs")}: {account.slice(0, 6)}...{account.slice(-4)}
-          </div>
-          <div className="network-info">
-            網路: {chainId === 11155111 ? "Sepolia" : `Chain ID: ${chainId}`}
-          </div>
-          {chainId !== 11155111 && (
-            <button
-              onClick={handleSwitchToSepolia}
-              className="switch-network-button"
-            >
-              切換到 Sepolia
-            </button>
-          )}
-        </div>
-      )}
+      {/* 錢包錯誤顯示 */}
+      {walletError && <div className="error-message">{walletError}</div>}
 
       <div className="game-container">
         <div className="input-section">

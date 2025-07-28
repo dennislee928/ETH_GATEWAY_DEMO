@@ -9,7 +9,6 @@ import {
 const useBlockchain = () => {
   const initProvider = () => {
     try {
-      // 使用集中化配置的 RPC 端點
       const gateway = getRpcEndpoint();
       const networkConfig = getNetworkConfig();
 
@@ -32,26 +31,11 @@ const useBlockchain = () => {
 
   const provider = initProvider();
 
-  // 檢查網路連接
-  const checkConnection = async () => {
-    try {
-      const network = await provider.getNetwork();
-      console.log("當前網路:", network);
-      return true;
-    } catch (error) {
-      console.error("網路連接檢查失敗:", error);
-      return false;
-    }
-  };
-
-  // 獲取餘額
   const getBalance = async (address) => {
     try {
-      // 使用集中化的地址驗證
       if (!validateAddress(address)) {
         throw new Error("無效的以太坊地址格式");
       }
-
       const balance = await provider.getBalance(address);
       return ethers.formatEther(balance);
     } catch (error) {
@@ -60,17 +44,21 @@ const useBlockchain = () => {
     }
   };
 
-  // 獲取最新區塊
   const getLatestBlock = async () => {
     try {
-      return await provider.getBlock("latest");
+      const block = await provider.getBlock("latest");
+      return {
+        number: block.number,
+        hash: block.hash,
+        timestamp: block.timestamp,
+        transactions: block.transactions.length,
+      };
     } catch (error) {
       console.error("獲取最新區塊失敗:", error);
       throw new Error(formatErrorMessage(error));
     }
   };
 
-  // 獲取網路資訊
   const getNetwork = async () => {
     try {
       const network = await provider.getNetwork();
@@ -89,7 +77,6 @@ const useBlockchain = () => {
     getBalance,
     getLatestBlock,
     getNetwork,
-    checkConnection,
   };
 };
 

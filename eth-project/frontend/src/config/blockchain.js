@@ -1,17 +1,12 @@
 // 區塊鏈配置檔案
 export const BLOCKCHAIN_CONFIG = {
-  // RPC 端點配置 - 按可靠性排序
+  // RPC 端點配置 - 只使用支援 CORS 的端點
   RPC_ENDPOINTS: {
     sepolia: [
-      "https://rpc.sepolia.org",
       "https://ethereum-sepolia.publicnode.com",
       "https://sepolia.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
     ],
-    mainnet: [
-      "https://ethereum.publicnode.com",
-      "https://rpc.ankr.com/eth",
-      "https://cloudflare-eth.com",
-    ],
+    mainnet: ["https://ethereum.publicnode.com", "https://rpc.ankr.com/eth"],
   },
 
   // 網路配置

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { ethers } from "ethers";
-import { getRpcEndpoint, getNetworkConfig } from "../config/blockchain";
+import { getRpcEndpoint } from "../config/blockchain";
 
 const useWallet = () => {
   const [account, setAccount] = useState("");

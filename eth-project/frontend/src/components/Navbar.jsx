@@ -19,28 +19,23 @@ const Navbar = () => {
             </Link>
           </li>
           <li className="nav-item">
+            <Link to="/explorer" className="nav-link">
+              {t("blockchainExplorer")}
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/advanced" className="nav-link">
+              {t("advancedFeatures")}
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/adds-on" className="nav-link">
+              {t("addsOn")}
+            </Link>
+          </li>
+          <li className="nav-item">
             <Link to="/faucet" className="nav-link">
               {t("faucet")}
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/ens" className="nav-link">
-              {t("ens")}
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/prices" className="nav-link">
-              {t("prices")}
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/game" className="nav-link">
-              {t("game")}
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/swap" className="nav-link">
-              {t("swap")}
             </Link>
           </li>
         </ul>

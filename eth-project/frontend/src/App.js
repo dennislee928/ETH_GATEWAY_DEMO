@@ -6,6 +6,7 @@ import BlockchainExplorer from "./components/BlockchainExplorer";
 import AdvancedFeatures from "./components/AdvancedFeatures";
 import AddsOn from "./components/adds-on";
 import Faucet from "./components/Faucet";
+import "./i18n"; // 導入 i18n 配置
 import "./App.css";
 import "./utils/testRpcEndpoints"; // 導入 RPC 測試工具
 import "./utils/emergencyFix"; // 導入緊急修復工具

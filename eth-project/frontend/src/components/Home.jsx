@@ -1,6 +1,8 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import "./component-css/Home.css";
+import BlockchainExplorer from "./BlockchainExplorer";
+import WalletConnect from "./WalletConnect";
 
 const Home = () => {
   const { t } = useTranslation();
@@ -11,6 +13,8 @@ const Home = () => {
         <h1 className="hero-title">{t("welcomeTitle")}</h1>
         <p className="hero-subtitle">{t("welcomeSubtitle")}</p>
 
+        <BlockchainExplorer />
+        <WalletConnect />
         <div className="features-grid">
           <div className="feature-card">
             <div className="feature-icon">🔍</div>

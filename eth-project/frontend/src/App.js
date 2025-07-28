@@ -9,6 +9,7 @@ import Faucet from "./components/Faucet";
 import "./App.css";
 import "./utils/testRpcEndpoints"; // 導入 RPC 測試工具
 import "./utils/emergencyFix"; // 導入緊急修復工具
+import "./utils/forceReload"; // 導入強制重新載入工具
 
 function App() {
   return (

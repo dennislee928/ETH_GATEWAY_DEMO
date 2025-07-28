@@ -12,19 +12,15 @@ const useBlockchain = () => {
       const gateway = getRpcEndpoint();
       const networkConfig = getNetworkConfig();
 
-      console.log("使用的 Gateway:", gateway);
-      console.log("網路配置:", networkConfig);
-
-      if (!gateway) {
-        throw new Error("未設定 ETH_GATEWAY");
-      }
+      console.log("🔧 使用的 Gateway:", gateway);
+      console.log("🌐 網路配置:", networkConfig);
 
       return new ethers.JsonRpcProvider(gateway, {
         chainId: networkConfig.chainId,
         name: networkConfig.name,
       });
     } catch (error) {
-      console.error("Provider 初始化失敗:", error);
+      console.error("❌ Provider 初始化失敗:", error);
       throw error;
     }
   };
@@ -39,7 +35,7 @@ const useBlockchain = () => {
       const balance = await provider.getBalance(address);
       return ethers.formatEther(balance);
     } catch (error) {
-      console.error("獲取餘額失敗:", error);
+      console.error("❌ 獲取餘額失敗:", error);
       throw new Error(formatErrorMessage(error));
     }
   };
@@ -54,7 +50,7 @@ const useBlockchain = () => {
         transactions: block.transactions.length,
       };
     } catch (error) {
-      console.error("獲取最新區塊失敗:", error);
+      console.error("❌ 獲取最新區塊失敗:", error);
       throw new Error(formatErrorMessage(error));
     }
   };
@@ -67,7 +63,7 @@ const useBlockchain = () => {
         chainId: network.chainId,
       };
     } catch (error) {
-      console.error("獲取網路資訊失敗:", error);
+      console.error("❌ 獲取網路資訊失敗:", error);
       throw new Error(formatErrorMessage(error));
     }
   };

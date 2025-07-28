@@ -1,24 +1,23 @@
 import { useState, useEffect, useCallback } from "react";
 import { ethers } from "ethers";
+import { getRpcEndpoint, getNetworkConfig } from "../config/blockchain";
 
 const useWallet = () => {
   const [account, setAccount] = useState("");
   const [isConnected, setIsConnected] = useState(false);
+  const [isConnecting, setIsConnecting] = useState(false);
   const [provider, setProvider] = useState(null);
   const [signer, setSigner] = useState(null);
   const [chainId, setChainId] = useState(null);
-  const [error, setError] = useState(null);
-  const [isConnecting, setIsConnecting] = useState(false);
+  const [error, setError] = useState("");
 
-  // 檢查是否支援 MetaMask
   const isMetaMaskAvailable = () => {
     return typeof window !== "undefined" && window.ethereum;
   };
 
-  // 檢查是否已連接
   const checkConnection = useCallback(async () => {
     if (!isMetaMaskAvailable()) {
-      return false;
+      return;
     }
 
     try {
@@ -30,39 +29,31 @@ const useWallet = () => {
         setAccount(accounts[0]);
         setIsConnected(true);
 
-        // 獲取網路資訊
         const chainId = await window.ethereum.request({
           method: "eth_chainId",
         });
         setChainId(parseInt(chainId, 16));
 
-        // 設置 provider 和 signer
-        const provider = new ethers.BrowserProvider(window.ethereum);
-        const signer = await provider.getSigner();
-        setProvider(provider);
-        setSigner(signer);
-
-        return true;
+        const ethersProvider = new ethers.BrowserProvider(window.ethereum);
+        setProvider(ethersProvider);
+        setSigner(await ethersProvider.getSigner());
       }
-      return false;
     } catch (error) {
-      console.error("檢查連接失敗:", error);
-      return false;
+      console.error("檢查連接狀態失敗:", error);
+      setError("檢查連接狀態失敗: " + error.message);
     }
   }, []);
 
-  // 連接錢包
   const connectWallet = useCallback(async () => {
     if (!isMetaMaskAvailable()) {
-      setError("MetaMask 未安裝，請先安裝 MetaMask 擴展");
+      setError("MetaMask 未安裝");
       return false;
     }
 
     setIsConnecting(true);
-    setError(null);
+    setError("");
 
     try {
-      // 請求連接
       const accounts = await window.ethereum.request({
         method: "eth_requestAccounts",
       });
@@ -71,55 +62,43 @@ const useWallet = () => {
         setAccount(accounts[0]);
         setIsConnected(true);
 
-        // 獲取網路資訊
         const chainId = await window.ethereum.request({
           method: "eth_chainId",
         });
         setChainId(parseInt(chainId, 16));
 
-        // 設置 provider 和 signer
-        const provider = new ethers.BrowserProvider(window.ethereum);
-        const signer = await provider.getSigner();
-        setProvider(provider);
-        setSigner(signer);
+        const ethersProvider = new ethers.BrowserProvider(window.ethereum);
+        setProvider(ethersProvider);
+        setSigner(await ethersProvider.getSigner());
 
-        console.log("錢包連接成功:", accounts[0]);
         return true;
       }
-      return false;
     } catch (error) {
       console.error("連接錢包失敗:", error);
-
       if (error.code === 4001) {
-        setError("用戶拒絕連接錢包");
-      } else if (error.code === -32002) {
-        setError("請檢查 MetaMask 彈窗並確認連接");
+        setError("用戶拒絕連接");
       } else {
-        setError("連接錢包時發生錯誤: " + error.message);
+        setError("連接失敗: " + error.message);
       }
-
       return false;
     } finally {
       setIsConnecting(false);
     }
   }, []);
 
-  // 斷開連接
   const disconnectWallet = useCallback(() => {
     setAccount("");
     setIsConnected(false);
     setProvider(null);
     setSigner(null);
     setChainId(null);
-    setError(null);
-    console.log("錢包已斷開連接");
+    setError("");
   }, []);
 
-  // 切換網路
   const switchNetwork = useCallback(
     async (targetChainId) => {
       if (!isMetaMaskAvailable() || !isConnected) {
-        setError("請先連接錢包");
+        setError("請先連接 MetaMask");
         return false;
       }
 
@@ -130,11 +109,19 @@ const useWallet = () => {
         });
         return true;
       } catch (error) {
-        console.error("切換網路失敗:", error);
-
         if (error.code === 4902) {
-          // 網路不存在，嘗試添加網路
+          // 網路不存在，嘗試添加
           try {
+            const networkConfig =
+              targetChainId === 11155111
+                ? getNetworkConfig("sepolia")
+                : getNetworkConfig("mainnet");
+
+            const rpcUrl =
+              targetChainId === 11155111
+                ? getRpcEndpoint("sepolia")
+                : getRpcEndpoint("mainnet");
+
             await window.ethereum.request({
               method: "wallet_addEthereumChain",
               params: [
@@ -149,10 +136,7 @@ const useWallet = () => {
                     symbol: "ETH",
                     decimals: 18,
                   },
-                  rpcUrls:
-                    targetChainId === 11155111
-                      ? ["https://ethereum-sepolia.publicnode.com"]
-                      : ["https://ethereum.publicnode.com"],
+                  rpcUrls: [rpcUrl],
                   blockExplorerUrls:
                     targetChainId === 11155111
                       ? ["https://sepolia.etherscan.io"]

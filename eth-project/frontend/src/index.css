@@ -61,6 +61,11 @@ body {
   color: var(--text-primary);
   line-height: 1.6;
   overflow-x: hidden;
+  /* Mobile optimizations */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 /* Custom Scrollbar */
@@ -156,17 +161,32 @@ p {
   100% {
     transform: translate(0);
   }
+  10% {
+    transform: translate(-1px, 1px);
+  }
   20% {
-    transform: translate(-2px, 2px);
+    transform: translate(1px, -1px);
+  }
+  30% {
+    transform: translate(-1px, -1px);
   }
   40% {
-    transform: translate(-2px, -2px);
+    transform: translate(1px, 1px);
+  }
+  50% {
+    transform: translate(0);
   }
   60% {
-    transform: translate(2px, 2px);
+    transform: translate(-1px, 0);
+  }
+  70% {
+    transform: translate(1px, 0);
   }
   80% {
-    transform: translate(2px, -2px);
+    transform: translate(0);
+  }
+  90% {
+    transform: translate(-1px, 1px);
   }
 }
 
@@ -247,6 +267,9 @@ p {
   letter-spacing: 1px;
   position: relative;
   overflow: hidden;
+  /* Mobile optimizations */
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .btn-primary {
@@ -284,6 +307,11 @@ select {
   padding: var(--spacing-sm) var(--spacing-md);
   color: var(--text-primary);
   transition: all 0.3s ease;
+  /* Mobile optimizations */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  font-size: 16px; /* Prevents zoom on iOS */
 }
 
 input:focus,
@@ -294,7 +322,38 @@ select:focus {
   box-shadow: var(--shadow-neon);
 }
 
-/* Responsive Breakpoints */
+/* Glitch Effect for Special Elements */
+.glitch {
+  position: relative;
+  animation: glitch 2s ease-in-out infinite;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+}
+
+.glitch::before {
+  animation: glitch 2s ease-in-out infinite reverse;
+  color: var(--neon-pink);
+  z-index: -1;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+}
+
+.glitch::after {
+  animation: glitch 2s ease-in-out infinite;
+  color: var(--neon-blue);
+  z-index: -2;
+  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+}
+
+/* Mobile-First Responsive Breakpoints */
 @media (max-width: 768px) {
   .grid-2,
   .grid-3,
@@ -305,17 +364,158 @@ select:focus {
   .cyber-card {
     padding: var(--spacing-md);
   }
-}
 
-@media (max-width: 480px) {
+  /* Mobile-specific spacing adjustments */
   :root {
     --spacing-lg: 1rem;
     --spacing-xl: 1.5rem;
     --spacing-2xl: 2rem;
   }
 
+  /* Improve touch targets */
+  .btn {
+    min-height: 44px;
+    padding: var(--spacing-sm) var(--spacing-lg);
+  }
+
+  input,
+  textarea,
+  select {
+    min-height: 44px;
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  /* Reduce animations on mobile for better performance */
+  .cyber-card:hover {
+    transform: none;
+  }
+
+  .cyber-card::before {
+    display: none;
+  }
+
+  /* Reduce glitch effect on mobile for better performance */
+  .glitch {
+    animation: glitch 3s ease-in-out infinite;
+  }
+
+  .glitch::before,
+  .glitch::after {
+    opacity: 0.6;
+  }
+}
+
+@media (max-width: 480px) {
   .cyber-card {
     padding: var(--spacing-sm);
+  }
+
+  /* Further reduce spacing for very small screens */
+  :root {
+    --spacing-lg: 0.75rem;
+    --spacing-xl: 1rem;
+    --spacing-2xl: 1.5rem;
+  }
+
+  /* Ensure minimum touch target size */
+  .btn {
+    min-height: 48px;
+    font-size: clamp(0.9rem, 4vw, 1rem);
+  }
+
+  input,
+  textarea,
+  select {
+    min-height: 48px;
+    font-size: clamp(0.9rem, 4vw, 1rem);
+  }
+}
+
+/* Touch-friendly improvements */
+@media (hover: none) and (pointer: coarse) {
+  .cyber-card:hover {
+    transform: none;
+  }
+
+  .cyber-card:active {
+    transform: scale(0.98);
+  }
+
+  .btn:hover {
+    transform: none;
+  }
+
+  .btn:active {
+    transform: scale(0.95);
+  }
+
+  /* Disable hover effects on touch devices */
+  .cyber-card::before {
+    display: none;
+  }
+}
+
+/* Landscape orientation optimizations */
+@media (max-width: 768px) and (orientation: landscape) {
+  .cyber-card {
+    padding: var(--spacing-sm);
+  }
+
+  .btn {
+    min-height: 40px;
+  }
+
+  input,
+  textarea,
+  select {
+    min-height: 40px;
+  }
+}
+
+/* High DPI display optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .cyber-card {
+    border-width: 0.5px;
+  }
+
+  .btn {
+    border-width: 0.5px;
+  }
+
+  input,
+  textarea,
+  select {
+    border-width: 0.5px;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --dark-bg: #000000;
+    --darker-bg: #000000;
+    --card-bg: #0a0a0a;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  /* Disable glitch effect for users who prefer reduced motion */
+  .glitch {
+    animation: none !important;
+  }
+
+  .glitch::before,
+  .glitch::after {
+    display: none !important;
   }
 }
 

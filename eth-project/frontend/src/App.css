@@ -204,7 +204,7 @@
   margin-bottom: var(--spacing-md);
 }
 
-/* Responsive Design */
+/* Mobile-First Responsive Design */
 @media (max-width: 1200px) {
   .container {
     max-width: 100%;
@@ -215,6 +215,11 @@
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: var(--spacing-lg);
   }
+
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--spacing-md);
+  }
 }
 
 @media (max-width: 768px) {
@@ -222,22 +227,55 @@
     padding: var(--spacing-md);
   }
 
-  .content-section {
-    padding: var(--spacing-lg);
+  .main-content {
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-md);
   }
 
-  .features-grid {
-    grid-template-columns: 1fr;
-    gap: var(--spacing-lg);
-  }
-
-  .stats-grid {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  .page-header {
+    margin-bottom: var(--spacing-xl);
   }
 
   .page-title {
     padding: var(--spacing-sm) var(--spacing-lg);
     font-size: clamp(1.5rem, 4vw, 2rem);
+  }
+
+  .content-section {
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+    margin: var(--spacing-lg) 0;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--spacing-md);
+  }
+
+  .loading-container {
+    min-height: 150px;
+  }
+
+  .cyber-spinner {
+    width: 40px;
+    height: 40px;
+  }
+
+  .error-container,
+  .success-container {
+    padding: var(--spacing-md);
+    margin: var(--spacing-md) 0;
+  }
+
+  .error-container h3,
+  .success-container h3 {
+    font-size: clamp(1rem, 4vw, 1.2rem);
   }
 }
 
@@ -246,16 +284,57 @@
     padding: var(--spacing-sm);
   }
 
-  .content-section {
-    padding: var(--spacing-md);
+  .main-content {
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-sm);
   }
 
-  .stats-grid {
-    grid-template-columns: 1fr;
+  .page-header {
+    margin-bottom: var(--spacing-lg);
   }
 
   .page-title {
     padding: var(--spacing-xs) var(--spacing-md);
+    font-size: clamp(1.3rem, 5vw, 1.8rem);
+  }
+
+  .content-section {
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-radius: var(--radius-md);
+  }
+
+  .features-grid {
+    gap: var(--spacing-md);
+    margin: var(--spacing-md) 0;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+  }
+
+  .loading-container {
+    min-height: 120px;
+  }
+
+  .cyber-spinner {
+    width: 35px;
+    height: 35px;
+    border-width: 2px;
+  }
+
+  .error-container,
+  .success-container {
+    padding: var(--spacing-sm);
+    margin: var(--spacing-sm) 0;
+    border-radius: var(--radius-md);
+  }
+
+  .error-container h3,
+  .success-container h3 {
+    font-size: clamp(0.9rem, 4.5vw, 1.1rem);
+    margin-bottom: var(--spacing-sm);
   }
 }
 
@@ -344,4 +423,63 @@
   animation: glitch 0.3s ease-in-out infinite;
   color: var(--neon-blue);
   z-index: -2;
+}
+
+/* Touch-friendly improvements for mobile */
+@media (hover: none) and (pointer: coarse) {
+  .content-section:hover {
+    transform: none;
+  }
+
+  .content-section:active {
+    transform: scale(0.99);
+  }
+
+  .page-title:hover {
+    transform: none;
+  }
+
+  .page-title:active {
+    transform: scale(0.98);
+  }
+}
+
+/* Landscape orientation adjustments for mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .container {
+    padding: var(--spacing-sm);
+  }
+
+  .main-content {
+    gap: var(--spacing-md);
+  }
+
+  .page-header {
+    margin-bottom: var(--spacing-md);
+  }
+
+  .content-section {
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .features-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .cyber-spinner {
+    border-width: 2px;
+  }
+
+  .content-section::before {
+    height: 1px;
+  }
+
+  .page-header::before {
+    height: 1px;
+  }
 }

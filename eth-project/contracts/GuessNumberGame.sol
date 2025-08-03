@@ -4,12 +4,20 @@ pragma solidity ^0.8.0;
 contract GuessNumberGame {
     uint256 private winningNumber;
     mapping(address => bool) public playerResults;
+    address public owner;
     
-    event GuessResult(address player, bool won);
+    event GuessResult(address player, bool won, uint256 guess, uint256 winningNumber);
+    event GamePlayed(address player, uint256 guess, bool won);
     
     constructor() {
-        // 初始化隨機數 (1-10)
-        winningNumber = (uint256(keccak256(abi.encodePacked(block.timestamp, block.prevrandao))) % 10) + 1;
+        owner = msg.sender;
+        // Initialize with a simple random number (1-10)
+        winningNumber = (uint256(keccak256(abi.encodePacked(block.timestamp, blockhash(block.number - 1)))) % 10) + 1;
+    }
+    
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only owner can call this function");
+        _;
     }
     
     function guess(uint256 number) public payable {
@@ -19,22 +27,51 @@ contract GuessNumberGame {
         bool won = (number == winningNumber);
         playerResults[msg.sender] = won;
         
-        if (won) {
+        // Check if contract has enough balance to pay reward
+        if (won && address(this).balance >= 0.02 ether) {
             payable(msg.sender).transfer(0.02 ether);
+        } else if (won) {
+            // If contract doesn't have enough balance, refund the player's bet
+            payable(msg.sender).transfer(msg.value);
         }
         
-        // 重新生成隨機數
-        winningNumber = (uint256(keccak256(abi.encodePacked(block.timestamp, block.prevrandao, msg.sender))) % 10) + 1;
+        // Generate new winning number
+        winningNumber = (uint256(keccak256(abi.encodePacked(
+            block.timestamp, 
+            blockhash(block.number - 1), 
+            msg.sender,
+            number
+        ))) % 10) + 1;
         
-        emit GuessResult(msg.sender, won);
+        emit GuessResult(msg.sender, won, number, winningNumber);
+        emit GamePlayed(msg.sender, number, won);
     }
     
     function getResult() public view returns (bool) {
         return playerResults[msg.sender];
     }
     
-    // 合約擁有者可以提取剩餘的 ETH
-    function withdraw() public {
-        payable(msg.sender).transfer(address(this).balance);
+    function getWinningNumber() public view onlyOwner returns (uint256) {
+        return winningNumber;
+    }
+    
+    function getContractBalance() public view returns (uint256) {
+        return address(this).balance;
+    }
+    
+    // Owner can withdraw contract balance
+    function withdraw() public onlyOwner {
+        require(address(this).balance > 0, "No balance to withdraw");
+        payable(owner).transfer(address(this).balance);
+    }
+    
+    // Owner can fund the contract
+    function fundContract() public payable onlyOwner {
+        require(msg.value > 0, "Must send some ETH");
+    }
+    
+    // Fallback function to receive ETH
+    receive() external payable {
+        // Allow contract to receive ETH
     }
 } 

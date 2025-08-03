@@ -2,33 +2,71 @@
   max-width: 600px;
   margin: 0 auto;
   padding: 2rem;
-  background: white;
+  background: var(--card-bg);
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border-glow);
+  position: relative;
+  overflow: hidden;
+}
+
+.blockchain-game::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--cyber-gradient);
 }
 
 .game-description {
-  color: #666;
+  color: var(--text-secondary);
   margin-bottom: 2rem;
   line-height: 1.6;
+  text-align: center;
 }
 
-/* WalletConnect 組件容器 */
+/* WalletConnect component container */
 .wallet-section {
   margin-bottom: 2rem;
   padding: 1rem;
-  background: #f8f9fa;
+  background: rgba(0, 255, 255, 0.05);
   border-radius: 8px;
-  border: 1px solid #e9ecef;
+  border: 1px solid rgba(0, 255, 255, 0.2);
 }
 
 .error-message {
-  background: #f8d7da;
-  color: #721c24;
+  background: rgba(255, 0, 0, 0.1);
+  color: #ff0000;
   padding: 0.75rem;
   border-radius: 4px;
   margin-bottom: 1rem;
-  border: 1px solid #f5c6cb;
+  border: 1px solid rgba(255, 0, 0, 0.3);
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Contract Info */
+.contract-info {
+  background: rgba(0, 255, 255, 0.1);
+  border: 1px solid var(--neon-blue);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.contract-info h4 {
+  color: var(--neon-blue);
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.warning {
+  color: #ff9800;
+  font-size: 0.9rem;
+  margin: 0;
 }
 
 .game-container {
@@ -39,29 +77,35 @@
   display: flex;
   gap: 1rem;
   margin-bottom: 1.5rem;
+  align-items: center;
 }
 
-input[type="number"] {
+.number-input {
   flex: 1;
   padding: 0.75rem;
-  border: 2px solid #e9ecef;
+  border: 2px solid var(--border-glow);
   border-radius: 8px;
   font-size: 1rem;
-  transition: border-color 0.3s ease;
+  background: var(--card-bg);
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+  font-family: "Orbitron", monospace;
 }
 
-input[type="number"]:focus {
+.number-input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: var(--neon-blue);
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
 }
 
-input[type="number"]:disabled {
-  background: #f8f9fa;
+.number-input:disabled {
+  background: rgba(0, 0, 0, 0.3);
   cursor: not-allowed;
+  opacity: 0.6;
 }
 
 .play-button {
-  background: #28a745;
+  background: var(--accent-gradient);
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -71,17 +115,43 @@ input[type="number"]:disabled {
   cursor: pointer;
   transition: all 0.3s ease;
   min-width: 120px;
+  font-family: "Orbitron", monospace;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+}
+
+.play-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.3s ease;
+}
+
+.play-button:hover::before {
+  left: 100%;
 }
 
 .play-button:hover:not(:disabled) {
-  background: #218838;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(255, 0, 128, 0.5);
 }
 
 .play-button:disabled {
-  background: #6c757d;
+  background: var(--text-muted);
   cursor: not-allowed;
   transform: none;
+  box-shadow: none;
 }
 
 .result {
@@ -91,31 +161,84 @@ input[type="number"]:disabled {
   font-weight: 600;
   text-align: center;
   font-size: 1.1rem;
+  border: 1px solid;
 }
 
 .result.won {
-  background: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
+  background: rgba(0, 255, 65, 0.1);
+  color: var(--neon-green);
+  border-color: var(--neon-green);
+  box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
 }
 
 .result.lost {
-  background: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
+  background: rgba(255, 0, 0, 0.1);
+  color: #ff0000;
+  border-color: #ff0000;
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+}
+
+/* Game History */
+.game-history {
+  background: rgba(0, 255, 255, 0.05);
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.game-history h4 {
+  color: var(--neon-blue);
+  margin-bottom: 1rem;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.history-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  border: 1px solid transparent;
+}
+
+.history-item.won {
+  background: rgba(0, 255, 65, 0.1);
+  border-color: rgba(0, 255, 65, 0.3);
+  color: var(--neon-green);
+}
+
+.history-item.lost {
+  background: rgba(255, 0, 0, 0.1);
+  border-color: rgba(255, 0, 0, 0.3);
+  color: #ff0000;
+}
+
+.history-item span {
+  flex: 1;
+  text-align: center;
 }
 
 .game-rules {
-  background: #f8f9fa;
+  background: rgba(0, 255, 255, 0.05);
   padding: 1.5rem;
   border-radius: 8px;
-  border: 1px solid #e9ecef;
+  border: 1px solid rgba(0, 255, 255, 0.2);
 }
 
 .game-rules h4 {
-  color: #495057;
+  color: var(--neon-blue);
   margin-bottom: 1rem;
   font-size: 1.1rem;
+  text-align: center;
 }
 
 .game-rules ul {
@@ -124,7 +247,7 @@ input[type="number"]:disabled {
 }
 
 .game-rules li {
-  color: #6c757d;
+  color: var(--text-secondary);
   margin-bottom: 0.5rem;
   line-height: 1.5;
 }
@@ -138,9 +261,46 @@ input[type="number"]:disabled {
 
   .input-section {
     flex-direction: column;
+    gap: 0.5rem;
   }
 
   .play-button {
     width: 100%;
+  }
+
+  .history-item {
+    flex-direction: column;
+    gap: 0.25rem;
+    text-align: center;
+  }
+
+  .history-item span {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .blockchain-game {
+    padding: 0.75rem;
+    margin: 0.5rem;
+  }
+
+  .game-description {
+    font-size: 0.9rem;
+  }
+
+  .number-input {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+  }
+
+  .play-button {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .result {
+    font-size: 1rem;
+    padding: 0.75rem;
   }
 }

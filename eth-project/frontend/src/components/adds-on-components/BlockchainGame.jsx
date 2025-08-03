@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import { useTranslation } from "react-i18next";
 import useWallet from "../../hooks/useWallet";
@@ -10,21 +10,44 @@ const BlockchainGame = () => {
   const [number, setNumber] = useState("");
   const [result, setResult] = useState("");
   const [loading, setLoading] = useState(false);
+  const [contractBalance, setContractBalance] = useState(null);
+  const [gameHistory, setGameHistory] = useState([]);
 
-  // 使用集中化的錢包 hook
+  // Use centralized wallet hook
   const { isConnected, signer, chainId, error: walletError } = useWallet();
 
-  // 猜數字遊戲合約 ABI
+  // Updated game contract ABI
   const gameABI = [
     "function guess(uint256 number) public payable",
     "function getResult() public view returns (bool)",
-    "event GuessResult(address player, bool won)",
+    "function getContractBalance() public view returns (uint256)",
+    "function getWinningNumber() public view returns (uint256)",
+    "event GuessResult(address player, bool won, uint256 guess, uint256 winningNumber)",
+    "event GamePlayed(address player, uint256 guess, bool won)",
   ];
 
-  // Sepolia 測試網上的遊戲合約地址
+  // Sepolia testnet game contract address
   const GAME_CONTRACT_ADDRESS = "0x9377e92D7Dc8976CD9B96Ff29D65dF8908a48d7d";
 
-  // 玩遊戲
+  // Check contract balance
+  const checkContractBalance = async () => {
+    if (!isConnected || !signer) return;
+
+    try {
+      const gameContract = new ethers.Contract(
+        GAME_CONTRACT_ADDRESS,
+        gameABI,
+        signer
+      );
+
+      const balance = await gameContract.getContractBalance();
+      setContractBalance(ethers.formatEther(balance));
+    } catch (error) {
+      console.error("Error checking contract balance:", error);
+    }
+  };
+
+  // Play game
   const playGame = async () => {
     if (!isConnected) {
       setResult(t("pleaseConnect"));
@@ -32,12 +55,12 @@ const BlockchainGame = () => {
     }
 
     if (!signer) {
-      setResult("請先連接錢包");
+      setResult("Please connect your wallet first");
       return;
     }
 
     if (chainId !== 11155111) {
-      setResult("請切換到 Sepolia 測試網路");
+      setResult("Please switch to Sepolia testnet");
       return;
     }
 
@@ -56,46 +79,109 @@ const BlockchainGame = () => {
         signer
       );
 
-      // 發送交易，包含 0.01 ETH 的遊戲費用
+      // Check contract balance before playing
+      const balance = await gameContract.getContractBalance();
+      const minBalance = ethers.parseEther("0.02");
+
+      if (balance < minBalance) {
+        setResult(
+          "⚠️ Contract has insufficient funds for rewards. Game may still work but rewards are not guaranteed."
+        );
+      }
+
+      // Send transaction with 0.01 ETH game fee
       const tx = await gameContract.guess(number, {
         value: ethers.parseEther("0.01"),
       });
 
-      setResult(t("waiting"));
+      setResult("⏳ Transaction submitted! Waiting for confirmation...");
 
-      // 等待交易確認
-      await tx.wait();
+      // Wait for transaction confirmation
+      const receipt = await tx.wait();
 
-      // 獲取遊戲結果
-      const won = await gameContract.getResult();
-      setResult(won ? t("youWon") : t("youLost"));
+      // Check if transaction was successful
+      if (receipt.status === 1) {
+        // Get game result
+        const won = await gameContract.getResult();
+
+        const resultMessage = won
+          ? "🎉 Congratulations! You won! Check your wallet for the reward."
+          : "😔 Sorry, you didn't guess correctly. Try again!";
+
+        setResult(resultMessage);
+
+        // Add to game history
+        setGameHistory((prev) => [
+          ...prev,
+          {
+            guess: number,
+            won,
+            timestamp: new Date().toLocaleTimeString(),
+            txHash: receipt.hash,
+          },
+        ]);
+
+        // Update contract balance
+        await checkContractBalance();
+      } else {
+        setResult("❌ Transaction failed. Please try again.");
+      }
     } catch (err) {
-      console.error("遊戲錯誤:", err);
+      console.error("Game error:", err);
+
+      let errorMessage = "Game execution failed: ";
 
       if (err.code === 4001) {
-        setResult("用戶拒絕交易");
+        errorMessage = "User rejected the transaction";
       } else if (err.message.includes("insufficient funds")) {
-        setResult("餘額不足，需要至少 0.01 ETH");
+        errorMessage = "Insufficient balance. You need at least 0.01 ETH";
+      } else if (err.message.includes("execution reverted")) {
+        errorMessage =
+          "Transaction reverted. This might be due to insufficient contract balance or network issues.";
+      } else if (err.message.includes("network")) {
+        errorMessage =
+          "Network error. Please check your connection and try again.";
       } else {
-        setResult("遊戲執行失敗: " + err.message);
+        errorMessage += err.message;
       }
+
+      setResult(errorMessage);
     } finally {
       setLoading(false);
     }
   };
+
+  // Check contract balance on component mount and when wallet connects
+  useEffect(() => {
+    if (isConnected && chainId === 11155111) {
+      checkContractBalance();
+    }
+  }, [isConnected, chainId]);
 
   return (
     <div className="blockchain-game">
       <h3>{t("guessNumber")}</h3>
       <p className="game-description">{t("gameDescription")}</p>
 
-      {/* 使用 WalletConnect 組件 */}
+      {/* Wallet Connect Component */}
       <div className="wallet-section">
         <WalletConnect showNetworkSwitch={true} />
       </div>
 
-      {/* 錢包錯誤顯示 */}
+      {/* Wallet Error Display */}
       {walletError && <div className="error-message">{walletError}</div>}
+
+      {/* Contract Balance Display */}
+      {contractBalance !== null && (
+        <div className="contract-info">
+          <h4>Contract Balance: {contractBalance} ETH</h4>
+          {parseFloat(contractBalance) < 0.02 && (
+            <p className="warning">
+              ⚠️ Low contract balance. Rewards may not be available.
+            </p>
+          )}
+        </div>
+      )}
 
       <div className="game-container">
         <div className="input-section">
@@ -107,6 +193,7 @@ const BlockchainGame = () => {
             onChange={(e) => setNumber(e.target.value)}
             placeholder={t("enterNumberPlaceholder")}
             disabled={!isConnected || loading || chainId !== 11155111}
+            className="number-input"
           />
           <button
             onClick={playGame}
@@ -115,13 +202,41 @@ const BlockchainGame = () => {
             }
             className="play-button"
           >
-            {loading ? t("playing") : t("play")}
+            {loading ? "⏳ Playing..." : "🎮 Play Game"}
           </button>
         </div>
 
         {result && (
-          <div className={`result ${result.includes("won") ? "won" : "lost"}`}>
+          <div
+            className={`result ${
+              result.includes("won") || result.includes("Congratulations")
+                ? "won"
+                : "lost"
+            }`}
+          >
             {result}
+          </div>
+        )}
+
+        {/* Game History */}
+        {gameHistory.length > 0 && (
+          <div className="game-history">
+            <h4>Recent Games</h4>
+            <div className="history-list">
+              {gameHistory
+                .slice(-5)
+                .reverse()
+                .map((game, index) => (
+                  <div
+                    key={index}
+                    className={`history-item ${game.won ? "won" : "lost"}`}
+                  >
+                    <span>Guess: {game.guess}</span>
+                    <span>{game.won ? "🎉 Won" : "😔 Lost"}</span>
+                    <span>{game.timestamp}</span>
+                  </div>
+                ))}
+            </div>
           </div>
         )}
 
@@ -131,9 +246,10 @@ const BlockchainGame = () => {
             <li>{t("gameRule1")}</li>
             <li>{t("gameRule2")}</li>
             <li>{t("gameRule3")}</li>
-            <li>需要 Sepolia 測試網路的 ETH</li>
-            <li>每次遊戲費用: 0.01 ETH</li>
-            <li>猜中可獲得 0.02 ETH 獎勵</li>
+            <li>Requires Sepolia testnet ETH</li>
+            <li>Game fee: 0.01 ETH per play</li>
+            <li>Win reward: 0.02 ETH (if contract has sufficient balance)</li>
+            <li>Numbers range: 1-10</li>
           </ul>
         </div>
       </div>

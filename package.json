@@ -11,7 +11,7 @@
   "description": "",
   "dependencies": {
     "@adraffy/ens-normalize": "^1.11.0",
-    "dotenv": "^16.5.0",
+    "dotenv": "^16.6.1",
     "ethereumjs-wallet": "^1.0.2",
     "ethers": "^6.15.0",
     "keythereum": "^2.0.0",

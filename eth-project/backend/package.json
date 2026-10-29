@@ -15,6 +15,7 @@
     "express": "^4.22.0"
   },
   "overrides": {
-    "proxy-addr": "^2.0.8"
+    "proxy-addr": "^2.0.8",
+    "ws": "^8.21.0"
   }
 }

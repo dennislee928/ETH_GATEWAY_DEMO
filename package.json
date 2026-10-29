@@ -24,6 +24,7 @@
     "ws": "^8.21.0",
     "tmp": "^0.2.6",
     "bn.js": "^5.2.3",
-    "follow-redirects": "^1.16.0"
+    "follow-redirects": "^1.16.0",
+    "uuid": "^11.1.1"
   }
 }

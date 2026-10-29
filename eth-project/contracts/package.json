@@ -18,6 +18,7 @@
   "description": "",
   "overrides": {
     "undici": "^6.29.1",
-    "fast-uri": "^3.1.9"
+    "fast-uri": "^3.1.9",
+    "brace-expansion": "^2.1.7"
   }
 }

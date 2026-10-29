@@ -15,5 +15,8 @@
     "ethers": "^5.7.2",
     "hardhat": "^2.22.1"
   },
-  "description": ""
+  "description": "",
+  "overrides": {
+    "undici": "^6.29.1"
+  }
 }

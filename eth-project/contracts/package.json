@@ -25,6 +25,7 @@
     "js-yaml": "^4.3.2",
     "tmp": "^0.2.6",
     "immutable": "^4.3.9",
-    "minimatch": "^5.1.8"
+    "minimatch": "^5.1.8",
+    "serialize-javascript": "^7.1.3"
   }
 }
